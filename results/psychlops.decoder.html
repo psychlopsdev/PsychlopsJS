@@ -1,0 +1,167 @@
+﻿<html>
+
+<head>
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<link rel="apple-touch-icon" href="apple_touch_icon.png" />
+	<link rel="apple-touch-startup-image" href="./startup.png" />
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<title>データ管理ツール</title>
+
+	<script src="../import/gen/jquery-3.2.0.min.js"></script>
+	<link rel="stylesheet" href="../import/gen/bootstrap.min.css">
+	<script src="../import/gen/bootstrap.min.js"></script>
+	<script src="../import/gen/useragent.js"></script>
+	<script src="../import/gen/sjcl.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		var restoredFiles = {};
+
+		$(function () {
+
+		});
+
+		function decode() {
+			var lines = $("#encoded_text").val().split(/\r\n|\r|\n/);
+			var enc;
+			for (var i = 0; i < lines.length; i++) {
+				if (lines[i].indexOf("results_encrypted=") == 0) {
+					enc = decodeURIComponent(lines[i].substring("results_encrypted=".length));
+					break;
+				}
+			}
+			var text = StanfordJavascriptCryptoLibrary.decrypt($("#send_mail_password").val(), enc);
+
+			alert(text);
+			//$("#decoded_text").val(text);
+
+			var files = JSON.parse(text);
+			var filename;
+			$("#restored_files").empty();
+			restoredFiles = {};
+			for (var i = 0; i < files.length; i++) {
+				filename = files[i].header.filename;
+				restoredFiles[filename] = files[i];
+				$("#restored_files").append($("<option value='" + filename + "'>" + filename + "</option>"));
+				restoredFiles[filename].data = decodeURI(restoredFiles[filename].data);
+			}
+			showFile(files[0].header.filename);
+		}
+		function showFile(filename) {
+			$("#decoded_text").val(restoredFiles[filename].data);
+		}
+		function saveFiles() {
+		}
+		function saveFile(filename) {
+			var text = restoredFiles[filename].body;
+			if (window.File && window.FileReader && window.FileList && window.Blob) {
+				var blob = new Blob([text], { type: "text/plain" });
+
+				if (window.navigator.msSaveBlob) {
+					window.navigator.msSaveBlob(blob, filename); // IE/Edge
+				} else {
+					var ua = window.navigator.userAgent.toLowerCase();
+					if (ua.indexOf('firefox') != -1) {
+						var a = document.createElement("a");
+						a.style = "display: none";
+						var url = window.URL.createObjectURL(blob);
+						a.href = url;
+						a.target = '_blank';
+						a.download = filename;
+						document.body.appendChild(a);
+						a.click();
+						setTimeout(function () {
+							document.body.removeChild(a);
+							window.URL.revokeObjectURL(url);
+						}, 100);
+					} else {
+						var a = document.createElement("a");
+						var url = window.URL.createObjectURL(blob);
+						a.href = url;
+						a.target = '_blank';
+						a.download = filename;
+						a.click();
+					}
+				}
+			} else {
+				alert('The File APIs are not fully supported in this browser.');
+			}
+		}
+	</script>
+	<style type="text/css">
+		#footer {
+			margin: 1em;
+			padding: 1em;
+			text-align: right;
+		}
+	</style>
+</head>
+
+
+<body>
+
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">データ管理ツール</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right" style="font-size:larger">
+					<li><a data-toggle="modal" onclick="" href="#config_setup"><span class="glyphicon glyphicon-cog"></span></a></li>
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div><!--/.container-fluid -->
+	</nav>
+
+	<section id="test-battery-list">
+
+		<div style="width:90%;margin:1em auto;">
+			<h3>メール本文をこちらに貼り付けてください。</h3>
+			<div>
+				<textarea id="encoded_text" style="width:100%;height:20em;display:block;"></textarea>
+			</div>
+			<div>
+				<label>暗号化パスワード: </label>
+				<input type="password" id="send_mail_password" style="width:20em; border-top:none; border-left:none; border-right:none; border-bottom:2px solid black;" />
+			</div>
+			<div>
+				<button class="btn btn-primary" onclick="decode();">復元</button>
+			</div>
+
+			<h3>復元されたテキスト</h3>
+			<div id="restored_text">
+				<div>
+					<select id="restored_files" onclick="showRestoredFile($('#restored_files').val())" onChange="showFile($('#restored_files').val())"></select>
+					<button onclick="saveFile($('#restored_files').val())">save</button>
+				</div>
+				<textarea id="decoded_text" style="width:100%;height:20em;display:block;"></textarea>
+				<button onclick="saveFile($('#restored_files').val())">save</button>
+			</div>
+		</div>
+
+	</section>
+
+
+	<div id="footer">
+		© 2015 NTT Corporation
+	</div>
+
+
+
+</body>
+
+</html>
