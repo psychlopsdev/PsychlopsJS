@@ -16,7 +16,7 @@ Classes
 - [Image]() ~ Natural Images and Offscreen Images
 - Shape
 	- [Rectangle]()
-	- [Ellipse]() `@ŠÛ‚ğ•`‚­
+	- [Ellipse]() ï½ã€€ä¸¸ã‚’æã
 	- [Line]()
 	- [Polygon]()
 - Figures
