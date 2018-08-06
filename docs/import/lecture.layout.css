@@ -1,0 +1,47 @@
+
+.number_literal {
+	color: #A00;
+}
+
+.editing_section {
+	color: #000;
+	background-color:#FFF;
+}
+.editing_section .number_literal {
+	color: #A00;
+}
+
+.non_editing_section {
+	color: #AAA;
+}
+.non_editing_section .section_comment {
+	color: #8A8;
+}
+.non_editing_section .number_literal {
+	color: #A88;
+}
+
+
+
+#psychlops_watchlist table {
+	width: 100%;
+	border-top: solid black 2px;
+	border-bottom: solid black 2px;
+}
+#psychlops_watchlist th {
+	border-bottom: solid black 1px;
+}
+#psychlops_watcher_value {
+	width: 70%;
+}
+
+#main_toolbar {
+    width: 95%;
+    padding: 1ex;
+    border: solid 1px lightgray;
+    box-shadow: 2px 2px 2px lightgrey;
+    margin-bottom: 10px;
+}
+#main_toolbar li {
+    margin: 0.2em
+}
