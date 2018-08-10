@@ -7,8 +7,16 @@ Samples with online editor
 - [Contrast Sensitivity](https://hosokawakenchi.github.io/PsychlopsJS/samples/ContrastSensitivity_space_editor.html)
 - [Lilac Chaser](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/LilacChaser.cpp)
 
-Reference Manual is embeded in Online Editor. Push [?] icon placed at right-top of the editor's window.
 
+Reference Manual
+======================
+
+- [Reference Manual](https://hosokawakenchi.github.io/PsychlopsJS/import/doc/reference)
+- Reference Manual is also embeded in Online Editor. Push [?] icon placed at right-top of the editor's window.
+
+
+User's Manual
+==============
 
 Installation
 --------------
