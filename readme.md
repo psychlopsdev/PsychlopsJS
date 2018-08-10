@@ -4,7 +4,7 @@
 Samples with online editor
 ----------------------------
 
-- [Contrast Sensitivity](https://hosokawakenchi.github.io/PsychlopsJS/samples/ContrastSensitivity_space_editor.html)
+- [Contrast Sensitivity](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/ContrastSensitivity_space.cpp)
 - [Lilac Chaser](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/LilacChaser.cpp)
 
 
