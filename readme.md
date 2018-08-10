@@ -11,7 +11,7 @@ Samples with online editor
 Reference Manual
 ======================
 
-- [Reference Manual](https://hosokawakenchi.github.io/PsychlopsJS/import/doc/reference)
+- [Reference Manual](https://hosokawakenchi.github.io/PsychlopsJS/import/doc/ClassLists)
 - Reference Manual is also embeded in Online Editor. Push [?] icon placed at right-top of the editor's window.
 
 
