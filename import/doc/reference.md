@@ -5,7 +5,7 @@ Psychlops Reference Manual
 Classes
 -------
 
-*Oblique* elements are under development.
+*Oblique* indicates that the class is under development.
 
 ### Basic
 
@@ -13,10 +13,12 @@ Classes
 
 ### Graphic Objects
 
+- [Color]()
+- [Canvas]()
 - [Image]() ~ Natural Images and Offscreen Images
 - Shape
 	- [Rectangle]()
-	- [Ellipse]() ～　丸を描く
+	- [Ellipse]()
 	- [Line]()
 	- [Polygon]()
 - Figures
