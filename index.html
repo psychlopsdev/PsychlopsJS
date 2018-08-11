@@ -3,357 +3,27 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-	<title></title>
+	<title>PsychlopsJS</title>
 
-	<script src="psychlops.config.site.js"></script>
 	<script src="import/gen/jquery-3.2.0.min.js"></script>
-	<link rel="stylesheet" href="import/gen/bootstrap.min.css">
-	<script src="import/gen/bootstrap.min.js"></script>
-	<script src="import/gen/marked.min.js"></script>
-	<script src="import/gen/useragent.js"></script>
-	<script src="import/gen/sjcl.js" type="text/javascript"></script>
-	<script src="import/gen/printThis.js"></script>
-	<script src="import/gen/jquery.qrcode.min.js"></script>
-	
+
 	<base href="./" id="base_href" />
 
 	<style type="text/css">
-		@viewport {
-			orientation: portrait;
-		}
-
-		html, body {
-			width: 100%;
-			height: 100%;
-		}
-
-		.active_code {
-			background-color: #DDD;
-			font: normal 10pt courier;
-			border: none;
-		}
-
-		canvas:focus {
-			outline: 0 invert none;
-		}
-
-
-		#self-test-list li {
-			margin: 2em;
-			list-style-type: none;
-		}
-
-		#self-test-list .btn {
-			width: 20em;
-		}
-
-		#footer {
-			margin: 1em;
-			padding: 1em;
-			text-align: right;
-		}
-
-		#recognized_device {
-			display: none;
-			color: blue;
-		}
-		#not_recognized_device {
-			display: none;
-			color: red;
-		}
-
-		#config_setup h4 {
-			margin-top: 2em;
-		}
-		#environment-table {
-			border-top: 2px solid black;
-			border-bottom: 2px solid black;
-		}
-		#environment-table th {
-			padding: 0.2em;
-		}
-		#environment-table td {
-			padding: 0.2em;
-		}
-		#participant_info {
-			width: auto;
-			margin: 1em auto;
-			text-align: center;
-			font-size: large;
-		}
-		#result_area {
-			margin: 1em auto;
-			width: 90%;
-			table-layout: fixed;
-		}
-		#result_area td, #result_area th {
-			width: 20%;
-		}
-		#result_area tr:first-child {
-			border-bottom: 2px solid black;
-		}
-		#result_area th, #result_area td {
-			text-align: center;
-		}
-
-		#data_transfer_sendmail > div {
-			margin-bottom: 3em;
-		}
-
-		#menu_list {
-			margin: 2em;
-		}
-
-		.markdown_content {
-			margin: 2em;
-			padding: 2em;
-			background-color: gainsboro;
-			border-radius: 0.5em;
-		}
 	</style>
 </head>
 
 
 <body id="the_body">
 
-	<iframe id="test_window" name="test_window" src="psychlops.player.html" style="position:fixed;top:0;left:0;z-index:9999;background-color:white;display:none;border:none;width:100%;height:100%;"></iframe>
+	<h1>PsychlopsJS</h1>
 
+	<h2>What is Psychlops?</h2>
+	<p>
+		PsychlopsJS is a open JavaScript Toolkit for drawing visual stimuli.
+	</p>
 
-	<div id="result_modal" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content" style="width:740px; margin-left: -70px;">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">結果</h4>
-				</div>
-				<div class="modal-body">
-					<div id="result_area">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-	<div id="description_dialog" class="modal fade" role="dialog" style="top:20%">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">説明</h4>
-				</div>
-				<div class="modal-body">
-					<p id="description_content" style="font-size:large; margin:2em;">
-					</p>
-				</div>
-				<div class="modal-footer" style="margin: 2em; text-align:center;">
-					<button type="button" class="btn btn-primary btn-lg" data-dismiss="modal" id="description_dialog_button">始める</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-	<div id="first_instruction" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">初めての方に</h4>
-				</div>
-				<div class="modal-body">
-					<h3><span class="glyphicon glyphicon-apple"></span>iPad</h3>
-					<p>このプログラムはiPad Air, iPad Air 2, iPad mini 2/3/4（および表示サイズ互換のASUS ZenPad等）を対象としております。それ以外のデバイスでは大きさ・色などが不正確になる可能性があります。ご了承ください。</p>
-					<div id="recognized_device">この機種は動作検証済みです。</div>
-					<div id="not_recognized_device">この機種は未検証です。正確な動作は保証できません。</div>
-					<h4>はじめに</h4>
-					<p>iPad、iPad miniともに実験時は30cmの距離（腕を軽く曲げる程度）で持ってください。図形が見づらい場合でも近づいて見ないようにしてください。</p>
-					<p><img src="images/caution1.png" width="400" /></p>
-					<p>実験は適度に暗い部屋の中で行ってください。日の当たる屋外や照明の明るい場所での実験はお控えください．</p>
-					<p><img src="images/caution2.png" width="400" /></p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-	<div id="instruction_setup" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">作業者向け設定機能</h4>
-				</div>
-				<div class="modal-body">
-					<p>
-						作業者向け設定機能
-					</p>
-					<div id="self-test-list">
-						<ul>
-							<li><button value="import/tests/30HzFlicker_selfcheck.cpp" class="btn btn-info">30 Hzフリッカ</button></li>
-							<li><button value="import/tests/ImagePixel.cpp" class="btn btn-info">Image座標検証</button></li>
-							<li><button value="import/tests/ShaderPixel.cpp" class="btn btn-info">Shader座標検証</button></li>
-						</ul>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-
-	<div id="config_setup" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title"><span class="glyphicon glyphicon-cog"></span> 設定</h4>
-				</div>
-				<div class="modal-body">
-					<h4>ガンマ調整</h4>
-					<div>
-						現在のガンマ値：<span id="current_gamma_setting">R:<input type="text" size="4" id="config_gamma_r" /> G:<input type="text" size="4" id="config_gamma_g" /> B:<input type="text" size="4" id="config_gamma_b" /></span>
-						<!--<button type="button" class="launcher btn btn-sm btn-success" onclick="configureColorGamma();">簡易調整</button>-->
-						<button type="button" class="launcher btn btn-success" value="import/tests/gamma_by_eye.cpp">簡易調整</button>
-					</div>
-					<h4>等輝度調整</h4>
-					<div>
-						<p>ガンマ補正後に行ってください．</p>
-						現在の輝度比率：<span id="current_isoluminant_setting">R:<input type="text" size="4" id="config_isoluminant_r" /> G:<input type="text" size="4" id="config_isoluminant_g" /> B:<input type="text" size="4" id="config_isoluminant_b" /></span>
-						<button type="button" class="launcher btn btn-success" value="import/tests/MinimumMotion.cpp">簡易調整</button>
-					</div>
-					<h4>フルスクリーンモード</h4>
-					<input type="radio" name="fullscreen_mode" value="false" />ウインドウ内<br />
-					<input type="radio" name="fullscreen_mode" value="true" />画面全体（Windows, Mac OS Xのみ）
-					<h4>環境</h4>
-					<table id="environment-table">
-						<tr><th>OS</th><td id="Environment_OS"></td></tr>
-						<tr><th>Device</th><td id="Environment_Device"></td></tr>
-						<tr><th>Browser</th><td id="Environment_Browser"></td></tr>
-					</table>
-					<div style="font-size:small;">
-						自動検出された環境と実際の環境が異なっている場合、Web版Psychlops開発チームまでご連絡ください。
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" onclick="saveConfiguration();" data-dismiss="modal">保存</button>
-					<button type="button" class="btn btn-default" onclick="loadConfiguration();" data-dismiss="modal">キャンセル</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-	<div id="data_transfer_modal" class="modal fade" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title"><span class="glyphicon glyphicon-cog"></span> データ管理</h4>
-				</div>
-				<div class="modal-body">
-					<div id="data_transfer_sendmail">
-						<div>
-							<h4>保存されているファイル</h4>
-							<div>
-								ファイル数：<span id="data_transfer_numfiles"></span><br />
-								最新の日付：<span id="data_transfer_latestfile"></span><br />
-								最古の日付：<span id="data_transfer_oldestfile"></span><br />
-								<button class="btn btn-primary btn-sm" onclick="DBresetConfirm();" style="margin-top:1em;">保存領域のリセット</button>
-							</div>
-						</div>
-						<div>
-							<h4>全て出力</h4>
-							保存されているすべてのファイルを出力します。出力先は標準設定では「ダウンロード」フォルダになります。
-							<div>
-								<button class="btn btn-primary btn-sm" onclick="saveAllResults();">出力</button>
-							</div>
-						</div>
-						<div>
-							<h4>メール</h4>
-							暗号化の上メーラで送信します
-							<div>
-								<label>暗号化パスワード: </label>
-								<input type="password" id="send_mail_password" style="width:20em; border-top:none; border-left:none; border-right:none; border-bottom:2px solid black;" />
-								<form method="post" action="mailto:?Subject=PsychlopsResults" id="send_mail_form" name="send_mail_form" enctype="text/plain" style="display:inline">
-									<input style="display:none" type="hidden" name="results_encrypted" id="results_encrypted">
-								</form>
-								<button class="btn btn-primary btn-sm" onclick="sendFilesByMail();">送信</button>
-								<div>
-									<a class="btn btn-primary btn-sm" href="results/psychlops.decoder.html">復号</a>
-								</div>
-							</div>
-						</div>
-						<div>
-							<h4>QRコード</h4>
-							QRコードで出力します。
-							<div>
-								<button class="btn btn-primary btn-sm" onclick="showResultsInQRCode('default_qr_code_area');">出力</button>
-								<div id="default_qr_code_area" style="margin: 1em auto; text-align:center"></div>
-							</div>
-						</div>
-						<div>
-							<h4>OneDrive</h4>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-
-		</div>
-	</div>
-
-
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="#"></a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li class="active"><a href="#first_instruction" data-toggle="modal">初めての方に</a></li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manual<span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a data-toggle="modal" data-target="#instruction_setup">作業者向け機能</a></li>
-							<li role="separator" class="divider"></li>
-						</ul>
-					</li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right" style="font-size:larger">
-					<li><a data-toggle="modal" onclick="countDB();" href="#data_transfer_modal"><span class="glyphicon glyphicon-share"></span></a></li>
-					<li><a data-toggle="modal" onclick="loadConfiguration();" href="#config_setup"><span class="glyphicon glyphicon-cog"></span></a></li>
-				</ul>
-			</div><!--/.nav-collapse -->
-		</div><!--/.container-fluid -->
-	</nav>
-
-	<div id="participant_info">
-		<label>お名前：</label>
-		<input type="text" size="30" id="participant_name" onchange="checkParticipantID();" />
-		<!-- For Apple
-			<input type="file" accept="image/*" capture="camera">
-			<input type="file" accept="video/*" capture="camera">
-		-->
-	</div>
-
+		
 
 	<section id="menu_list">
 		<div>
@@ -370,12 +40,9 @@
 		</div>
 	</section>
 
-	<h2 style="margin-top:3em"></h2>
-	<div id="readme_markdown" class="markdown_content" src="readme.md"> </div>
-
 
 	<div id="footer">
-		© 2017 Psychlops Developer Team
+		© 2018 Psychlops Developer Team
 	</div>
 
 
