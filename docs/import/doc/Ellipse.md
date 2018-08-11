@@ -1,3 +1,0 @@
-class Ellipse (psychlops)
-======================
-

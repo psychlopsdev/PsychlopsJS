@@ -15,7 +15,9 @@ void psychlops_main() {
 
 	///+ Preperation
 	//// Declare and initialize local variables
+	
 	Canvas cnvs(Canvas::window); //Prepare drawing window
+	Color::setGammaValue(); // set gamma correction value as device-default.
 	double dotsize = 100 * cnvs.getPixelRatio();
 	double dot_lum = 1;
 	double bg_lum = 0.5;

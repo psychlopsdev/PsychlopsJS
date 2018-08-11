@@ -2,10 +2,13 @@
 using namespace Psychlops;
 
 void psychlops_main() {
+
+	Canvas::useNoisyBit(true); // This function must be called before the declaration of Canvas instance.
 	Canvas cnvs(Canvas::window); // make a drawing window, 1024 x 768, 32bit, 60.0 Hz
+	Color::setGammaValue(); // set gamma correction value as device-default.
 	Font::default_font = Font(L"Arial", 18); //Set a default font.
 
-											 //// Prepare Global variables
+	//// Prepare Global variables
 	double direction = 90.0; // a direction of global motion
 	double sigma = 2.0;// * cnvs.getPixelRatio();    // a size of Gabor window
 	double tf = 2.0;        //speed as a maximum temporal frequency

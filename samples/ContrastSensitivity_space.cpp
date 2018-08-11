@@ -3,9 +3,8 @@ using namespace Psychlops;
 
 void psychlops_main() {
 	AppInfo::expname = "SpatialContrastSensitivity";
-	AppInfo::tabletMode(false);
 
-	Canvas::useNoisyBit(true);
+	Canvas::useNoisyBit(true); // This function must be called before the declaration of Canvas instance.
 	Canvas cnvs(Canvas::fullscreen);
 	Widgets::Theme::setLightTheme();
 	Color::setGammaValue();

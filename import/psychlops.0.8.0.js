@@ -1395,8 +1395,8 @@ Psychlops.Canvas = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 						this.width = Psychlops.Display.primary.width;
 						this.height = Psychlops.Display.primary.height;
 					} else {
-						this.width = window.innerWidth * window.devicePixelRatio;
-						this.height = window.innerHeight * window.devicePixelRatio;
+						this.width = Math.round(window.innerWidth * window.devicePixelRatio);
+						this.height = Math.round(window.innerHeight * window.devicePixelRatio);
 					}
 					this._fullscreen = true;
 					this.initialize(elem_id);
@@ -1485,7 +1485,8 @@ Psychlops.Canvas = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 		var style_zoom = "zoom:" + (1.0 / Psychlops.Canvas.HiDPIFactor + ";");
 		if (Psychlops.AppInfo._transform_style) {
 			var translate_ratio = (Psychlops.Canvas.HiDPIFactor - 1.0) / 2;
-			style_zoom = "transform: scale(" + 1.0 / Psychlops.Canvas.HiDPIFactor + "," + 1.0 / Psychlops.Canvas.HiDPIFactor + ")"
+			var scale_ratio = (this.width) / (this.width * Psychlops.Canvas.HiDPIFactor);
+			style_zoom = "transform: scale(" + scale_ratio + "," + scale_ratio + ")"
 				//+ " translate(-" + translate_ratio*100 + "%,-" + translate_ratio*100 + "%) ;";
 				+ " translate(-" + (translate_ratio * this.width - 0.375) + "px,-" + (translate_ratio * this.height - 0.375) + "px) ;";
 			style_zoom += "position:absolute;left:0;top:0;";
