@@ -4,8 +4,16 @@
 Samples with online editor
 ----------------------------
 
-- [Contrast Sensitivity](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/ContrastSensitivity_space.cpp)
-- [Lilac Chaser](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/LilacChaser.cpp)
+- [Contrast Sensitivity (static)](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/ContrastSensitivity_space.cpp)
+- [Contrast Sensitivity (dynamic)](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/ContrastSensitivity_temp.cpp)
+- [Lilac Chaser](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/LilacChaser.cpp)
+- [Motion Induced Blindness](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/MotionInducedBlindness.cpp)
+- [Random Dot Stereogram](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/RandomDotStereogram.cpp)
+- [Motion induced position shift](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/MotionInducedPositionShift.cpp)
+- [Global Plaid<](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/GlobalPlaid_.cpp)
+- [2f3f](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/2f3f.cpp)
+- [CIE L'u'v' viewer](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/CIELuv_demo.cpp)
+- [CIE L'a'b' viewer](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/CIELab_demo.cpp)
 
 
 Reference Manual
