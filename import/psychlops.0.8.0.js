@@ -1484,7 +1484,8 @@ Psychlops.Canvas = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 		var style_height = this.height / Psychlops.Canvas.HiDPIFactor;
 		var style_zoom = "zoom:" + (1.0 / Psychlops.Canvas.HiDPIFactor + ";");
 		if (Psychlops.AppInfo._transform_style) {
-			style_zoom = "transform: translate(-25%,-25%) scale(" + 1.0 / Psychlops.Canvas.HiDPIFactor + "," + 1.0 / Psychlops.Canvas.HiDPIFactor + ");"
+			var translate_percent = (Psychlops.Canvas.HiDPIFactor - 1.0) * 100 / 2
+			style_zoom = "transform: scale(" + 1.0 / Psychlops.Canvas.HiDPIFactor + "," + 1.0 / Psychlops.Canvas.HiDPIFactor + ") translate(-" + translate_percent + "%,-" + translate_percent + "%) ;"
 			style_zoom += "position:absolute;left:0;top:0;";
 		}
 
