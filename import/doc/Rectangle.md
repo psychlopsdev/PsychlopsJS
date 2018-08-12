@@ -61,6 +61,10 @@ rect.draw(Color::red);
 - `double getBottom()`
 - `double getRight()`
 
+### Drawing
+
+`void draw(color)`
+: draw the ellipse with designated [Color]();
 
 ### Checking inclusion
 
