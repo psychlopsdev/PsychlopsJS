@@ -1,23 +1,29 @@
-class Keyboard
+class Psychlops::Keyboard
 ==========================
 
-## Functions of Key and Button
+## Usage
 
-bool pushed()
-bool released()
-bool pressed()
-
-## Keyboard
-
-Use as this.
-
-
+Typical usage:
+~~~
 if(Keyboard::spc.pushed())
 {
     doSomething();
 }
+~~~
 
-### Key list
+## Functions of Key and Button
+
+`bool pushed()`
+: Transient-signal.
+
+`bool released()`
+: Transient-signal.
+
+`bool pressed()`
+: Sustained-signal. Always returns `true` if the key is pressed.
+
+
+## Key list
 
 - f1, f2, f3, f4, f5, f6, f7, f8, f8, f10
 - esc, one, two, three, four, five, six, seven, eight, nine, zero

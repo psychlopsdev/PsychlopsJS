@@ -3,64 +3,72 @@ class Psychlops::Rectangle
 
 
 ## Usage
-Rectangleで扱う長方形は座標が固定されています。
-通常、長方形を移動するときはcentering()などでセンタリングしてから、shift(double h, double v)で動かします。
+Typically, a rectangle is designate its size by `set` and move to relative coordinate to center of window by `centering` and `shift` functions.
 
+
+Typical usage:
 ~~~
-// サンプル
 Psychlops::Rectangle rect;
 rect.set(100, 100).centering().shift(-100, 0);
 rect.draw(Color::red);
-   // rectという名前のRectangleを作る
-   // 幅100高100ピクセルの大きさに設定し、センタリングしてx軸で100ピクセル左に移動
-   // 赤い色で表示
 ~~~
-
-
 
 ## Functions
 
-### Initialize
+### Initialization
 
-- `Rectangle()`: (0,0)で初期化します。
-- `Rectangle(double l, double t, double r, double b)`: 長方形の左上の座標が(l,t)、右下の座標が(r,b)になるように初期化します。
-- `Rectangle(double width, double height)`: 長方形を幅width、高さheightに初期化します。
+#### By decralation
 
--  Rectangle& set
-	- `set(double l, double t, double r, double b)`: 長方形の左、上、右、下の座標を指定して定義します。
-	- `set(double width, double height)`: 長方形の大きさを幅width、高さheightに変更します。左上は(0,0)になります。
-- Rectangle& `resize(double width, double height)`: 長方形の大きさを幅width、高さheightに変更します。中央の位置が固定されます。
+`Rectangle()`
+: set the rectangle's size as `0` * `0`.
 
-### Translate
+`Rectangle(double left, double top, double right, double bottom)`
+: 
 
-- Rectangle& centering
-	- `centering()`: 長方形を画面の中央に移動します。
-	- `centering(double x, double y)`: 長方形の中心を(x,y)に移動します。
-	- `centering(Point po)`: 長方形の中心をpoに移動します。
-		- `centering(object.getCenter())`: [Image]()など`getCenter()`が定義されていればこの方法で重ね合わせできます。
+`Rectangle(double width, double height)`
+: set the rectangle's size as `width` * `height`. Left-Top corner is placed on (0,0).
 
-- Rectangle& `shift(double h, double v)`: 長方形を現在の座標から(h,v)だけ移動します。
+#### By function
+
+`Rectangle& set(double left, double top, double right, double bottom)`
+: 
+
+`Rectangle& set(double width, double height)`
+: set the rectangle's size as `width` * `height`. Left-Top corner is placed on (0,0).
+
+`Rectangle& resize(double width, double height)`
+: resize the rectangle's size as `width` * `height`. Center of the rectangle will be kept.
+
+### Translation
+
+`Rectangle& centering()`
+:place the rectangle at center of the window.
+
+`Rectangle& centering(double x, double y)`
+`Rectangle& centering(Point p)`
+: place the rectangle centered at `(x,y)` or `(p.x, p.y)`. Typically, the function is used with `getCenter()` as `rect.centering(image.getCenter())`.
+
+`Rectangle& shift(double h, double v)`
+: move the rectangle by `(h, v)`.
 
 ### Getting parameters
 
-それぞれの関数名のとおりの長方形の情報を取得します。
-例えば、getWidthなら長方形の幅を返します。
-
-- double `getWidth()`:
-- double `getHeight()`:
-- Point `getCenter()`:
-- double `getHcenter()`:
-- double `getVcenter()`:
-- double `getTop()`:
-- double `getLeft()`:
-- double `getBottom()`:
-- double `getRight()`:
+- `double getWidth()`
+- `double getHeight()`
+- `Point getCenter()`
+- `double getTop()`
+- `double getLeft()`
+- `double getBottom()`
+- `double getRight()`
 
 
-### Checking collision
-Rectangleが、その座標内に他の点や四角形を含むかどうか判定します。判定時は自身を閉集合として考えます（＝境界線上に判定対象がある場合、含むと判定されます）。
+### Checking inclusion
 
-- bool include
-	- `include(double x, double y)`: Rectangleの中に(x,y)点が入っているかどうか判定します
-	- `include(Point other)`: Rectangleの中にPoint点が入っているかどうか判定します
-	- `include(Rectangle other)`: Rectangleの中に別のRectangleが完全に入っているかどうか判定します
+These functions check whether the `Rectangle` instance includes other points in its area. The `Rectangle` instance is treated as closed set (= returns `true` if the point on the boundary line).
+
+`bool include(double x, double y)`
+: 
+
+`bool include(Point other)`
+: 
+
