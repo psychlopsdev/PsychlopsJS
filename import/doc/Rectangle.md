@@ -45,8 +45,8 @@ rect.draw(Color::red);
 :place the rectangle at center of the window.
 
 `Rectangle& centering(double x, double y)`
-`Rectangle& centering(Point p)`
-: place the rectangle centered at `(x,y)` or `(p.x, p.y)`. Typically, the function is used with `getCenter()` as `rect.centering(image.getCenter())`.
+`Rectangle& centering(Point new_center)`
+: place the rectangle centered at `(x,y)` or `(new_center.x, new_center.y)`. Typically, the function is used with `getCenter()` as `rect.centering(image.getCenter())`.
 
 `Rectangle& shift(double h, double v)`
 : move the rectangle by `(h, v)`.
@@ -64,7 +64,7 @@ rect.draw(Color::red);
 ### Drawing
 
 `void draw(color)`
-: draw the ellipse with designated [Color]();
+: draw the ellipse with designated [Color](Color);
 
 ### Checking inclusion
 

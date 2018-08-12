@@ -5,27 +5,31 @@ Psychlops Reference Manual
 Classes
 -------
 
-*Oblique* elements are under development.
+~~Struck~~ name indicates that the class is obsoleted.
+*Obliqued* name indicates that the class is not yet implemented.
 
 ### Basic
 
-- [Math]()
+- [Math](Math)
 
 ### Graphic Objects
 
-- [Image]() ~ Natural Images and Offscreen Images
+- [Color](Color)
+- [Canvas](Canvas)
+- [Image](Image) ~ Natural Images and Offscreen Images
 - Shape
-	- [Rectangle]()
-	- [Ellipse]() ～　丸を描く
-	- [Line]()
-	- [Polygon]()
+	- [Rectangle](Rectangle)
+	- [Ellipse](Ellipse)
+	- [Line](Line)
+	- [Polygon](Polygon)
 - Figures
-	- *[Grating]()*
+	- *[Grating](Grating)*
+	- [ShaderGabor](ShaderGabor)
 
 ### I/O
 
 - Input
-	- [Keyboard]()
-	- [Mouse]()
+	- [Keyboard](Keyboard)
+	- [Mouse](Mouse)
 
 - *[Audio]()*

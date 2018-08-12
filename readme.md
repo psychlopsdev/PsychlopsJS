@@ -1,6 +1,9 @@
 ﻿About This Project
 ====================
 
+Psychlops is a frer toolkit/library for drawing various types of visual stimulus used in the Vision science. This is the JavaScript version running on web-browsers. Web-site of project including C++ version is at [osjn.jp](http://psychlops.osdn.jp/).
+
+
 Samples with online editor
 ----------------------------
 
@@ -19,12 +22,12 @@ Samples with online editor
 Reference Manual
 ======================
 
-- [Reference Manual](https://hosokawakenchi.github.io/PsychlopsJS/import/doc/ClassLists)
+- [Reference Manual](https://hosokawakenchi.github.io/PsychlopsJS/import/doc/ReferenceManual)
 - Reference Manual is also embeded in Online Editor. Push [?] icon placed at right-top of the editor's window.
 
 
 User's Manual
-==============
+======================
 
 Installation
 --------------
@@ -75,7 +78,7 @@ Open “index.menu.html” at top of the Psychlops JS folder. Then, Please edit 
 After editing cpp files, copy whole C++ programs inside the <textarea id="running_program"> element at the end of “psychlops.offline.template.html” file.
 
 
-Editing index
+#### Editing index
 Open “index.html” at top of the Psychlops JS folder. Then, Please edit <li> elements inside the <section id="menu_list"> element at the last of the file.
 
 
