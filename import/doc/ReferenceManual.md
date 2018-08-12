@@ -5,7 +5,6 @@ Psychlops Reference Manual
 Classes
 -------
 
-~~Struck~~ name indicates that the class is obsoleted.
 *Obliqued* name indicates that the class is not yet implemented.
 
 ### Basic
@@ -22,13 +21,16 @@ Classes
 	- [Ellipse](Ellipse)
 	- [Line](Line)
 	- [Polygon](Polygon)
+	- [Letters](Letters)
 - Figures
 	- *[Grating](Grating)*
 	- [ShaderGabor](ShaderGabor)
 
 ### I/O
 
-- Input
+- [Clock](Clock)
+
+- HID
 	- [Keyboard](Keyboard)
 	- [Mouse](Mouse)
 

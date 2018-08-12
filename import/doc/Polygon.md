@@ -7,7 +7,7 @@ class Psychlops::Polygon
 ### Translation
 
 `Polygon& centering()`
-:place the Polygon at center of the window.
+: place the Polygon at center of the window.
 
 `Polygon& centering(x, y)`
 `Polygon& centering(Point new_center)`

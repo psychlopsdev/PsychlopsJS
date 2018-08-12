@@ -1,7 +1,7 @@
 ﻿About This Project
 ====================
 
-Psychlops is a frer toolkit/library for drawing various types of visual stimulus used in the Vision science. This is the JavaScript version running on web-browsers. Web-site of project including C++ version is at [osjn.jp](http://psychlops.osdn.jp/).
+Psychlops is a frer toolkit/library for drawing various types of visual stimulus used in the vision science. This is the JavaScript version running on web-browsers. Web-site of project including C++ version is at [osdn.jp](http://psychlops.osdn.jp/).
 
 
 Samples with online editor
@@ -15,8 +15,8 @@ Samples with online editor
 - [Motion induced position shift](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/MotionInducedPositionShift.cpp)
 - [Global Plaid](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/GlobalPlaid_Shader.cpp)
 - [2f3f](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/2f3f.cpp)
-- [CIE L*u*v* viewer](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/CIELuv_demo.cpp) ! Chromaticities of RGB of the display is assumed to be same to sRGB.
-- [CIE L*a*b* viewer](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/CIELab_demo.cpp) ! Chromaticities of RGB of the display is assumed to be same to sRGB.
+- [CIE Luv viewer](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/CIELuv_demo.cpp) ! Chromaticities of RGB of the display is assumed to be same to sRGB.
+- [CIE Lab viewer](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/CIELab_demo.cpp) ! Chromaticities of RGB of the display is assumed to be same to sRGB.
 
 
 Reference Manual
@@ -36,10 +36,10 @@ Installation
 
 #### Supported browsers
 For the client, Chrome and Safari are recommended. Edge and Firefox are also supported. The latest version is strongly recommended for all the browsers.
-- Chrome: greater than 60
-- Safari: greater than 10
-- Edge: greater than 11
-- Firefox: greater than 52
+- Chrome: version 60 or later
+- Safari: version 10 or later
+- Edge: version 11 or later
+- Firefox: version 52 or later
 
 #### Server: online and offline use
 Since Psychlops JS operates as a Web application, it basically assumes that it is installed on an HTTP server and accessed via the Internet. At the same time, offline execution is also supported to execute programs in an offline environment with tablet devices.

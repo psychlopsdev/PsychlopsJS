@@ -6,9 +6,9 @@ Psychlops::Ellipse expresses inscribed ellipsoids inside a rectangle. Typically,
 
 Typical usage:
 ~~~
-Psychlops::Ellipse rect;
-rect.set(100, 100).centering().shift(-100, 0);
-rect.draw(Color::red);
+Psychlops::Ellipse ellipse;
+ellipse.set(100, 100).centering().shift(-100, 0);
+ellipse.draw(Color::red);
 ~~~
 
 ## Functions
@@ -39,14 +39,14 @@ rect.draw(Color::red);
 ### Translation
 
 `Rectangle& centering()`
-:place the rectangle at center of the window.
+: place the rectangle at center of the window.
 
 `Rectangle& centering(double x, double y)`
 `Rectangle& centering(Point p)`
-: place the rectangle centered at `(x,y)` or `(p.x, p.y)`. Typically, the function is used with `getCenter()` as `rect.centering(image.getCenter())`.
+: place the ellipse centered at `(x,y)` or `(p.x, p.y)`. Typically, the function is used with `getCenter()` as `ellipse.centering(image.getCenter())`.
 
 `Rectangle& shift(double h, double v)`
-: move the rectangle by `(h, v)`.
+: move the ellipse by `(h, v)`.
 
 ### Drawing
 

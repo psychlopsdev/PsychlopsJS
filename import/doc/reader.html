@@ -5,16 +5,29 @@
 	<title>reader</title>
 	<script src="js-markdown-extra.js"></script>
 	<style type="text/css">
+		#renderedText {
+			font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+			-ms-text-size-adjust: 100%;
+			-webkit-text-size-adjust: 100%
+		}
 		#renderedText table, #renderedText th, #renderedText td {
 			border: 1px solid gray;
 		}
+		#renderedText pre {
+			margin: 1em;
+			padding: 0.5em;
+		}
 		#renderedText pre, #renderedText code {
-			background: #FFE;
+			font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+			background-color: #f3f6fa;
 		}
 		#renderedText blockquote {
 			border: 1px dashed black;
 			border-radius: 3px;
 			font-style: italic;
+		}
+		#renderedText dd {
+			margin-bottom: 1em;
 		}
 		#renderedText a, #renderedText a:visited {
 			color: blue;
@@ -58,7 +71,7 @@
 						var elements = elem.getElementsByTagName('a');
 						for (var i = 0; i < elements.length; i++) {
 							var link = elements[i].getAttribute("href");
-							if (link == "") {
+							if (link == "" || link == elements[i].innerText) {
 								var target = "import/doc/" + elements[i].innerText + ".md";
 								elements[i].removeAttribute("href");
 								elements[i].setAttribute("target", "_self");

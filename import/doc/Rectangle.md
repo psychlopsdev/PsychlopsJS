@@ -42,7 +42,7 @@ rect.draw(Color::red);
 ### Translation
 
 `Rectangle& centering()`
-:place the rectangle at center of the window.
+: place the rectangle at center of the window.
 
 `Rectangle& centering(double x, double y)`
 `Rectangle& centering(Point new_center)`
