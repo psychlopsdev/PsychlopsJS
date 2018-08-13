@@ -7,6 +7,8 @@ Psychlops is a frer toolkit/library for drawing various types of visual stimulus
 Samples with online editor
 ----------------------------
 
+Currently, all samples are written in C++ and depends on embeded converter. Pure JavaScript version is being prepared.
+
 - [Contrast Sensitivity (static)](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/ContrastSensitivity_space.cpp)
 - [Contrast Sensitivity (dynamic)](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/ContrastSensitivity_temp.cpp)
 - [Lilac Chaser](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/LilacChaser.cpp)

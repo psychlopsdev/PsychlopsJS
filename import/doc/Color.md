@@ -14,10 +14,10 @@ Functions
 `Color set(r, g, b, a)`
 : set value of R, G, B, A. Range of the value is from 0 to 1.
 
-- `double getR()`
-- `double getG()`
-- `double getB()`
-- `double getA()`
+`double getR()`
+`double getG()`
+`double getB()`
+`double getA()`
 : Range of the value is from 0 to 1.
 
 ### Class Functions

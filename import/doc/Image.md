@@ -24,10 +24,10 @@ Functions
 #### By decralation
 
 `Image& set(int width, int height)`
-: set a Image instance with designated area.
+: set a Image instance with designated size.
 
 `Image& load(string file_name)`
-: load a Image file.
+: load a Image file. PNG and JPEG are supported.
 
 ### Translation
 
@@ -44,7 +44,10 @@ Functions
 ### Pixel manipulation
 
 `Image& pix(int x, int y, Color col)`
-: set the [Color](Color) of designated pixel.
+: set the [Color](Color) of designated pixel. With this function, alpha-blending is applied on drawing to the Image.
+
+`Image& pix_raw(int x, int y, Color col)`
+: set the [Color](Color) of designated pixel. With this function, color values are directly copied to the image. Alpha-blending will not be applied.
 
 `Image& alpha(int x, int y, alpha)`
 : set the alpha value of designated pixel.
@@ -55,8 +58,8 @@ Functions
 
 ### Drawing
 
-`void draw(color)`
-: draw the Image
+`void draw()`
+: draw the Image on the [Canvas](Canvas)
 
 ### Getting parameters
 
