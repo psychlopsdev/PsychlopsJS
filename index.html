@@ -8,11 +8,66 @@
 
 	<title>PsychlopsJS</title>
 
+	<link rel="stylesheet" href="import/doc/air.css">
 	<script src="import/gen/jquery-3.2.0.min.js"></script>
 
 	<base href="./" id="base_href" />
 
 	<style type="text/css">
+		h2 {
+			margin-top: 2em;
+		}
+
+		#index_demo {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+
+		#index_demo > div {
+			display: flex;
+			width: 120px;
+			flex-direction: column;
+			flex-wrap: nowrap;
+			justify-content: center;
+			align-items: stretch;
+			align-content: flex-start;
+			margin: 0.5em;
+			padding: 0.5em;
+			box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.2);
+		}
+
+		#index_demo > div > div:first-child {
+			font-weight: bold;
+			font-family: 'arial narrow';
+			line-height: 120%;
+			height: 220%;
+			margin-bottom: 0.5em;
+		}
+		#index_demo > div > div:nth-child(3) > a {
+			position: relative;
+			display: inline-block;
+			font-weight: bold;
+			padding: 0.25em 0.5em;
+			text-decoration: none;
+			color: #00BCD4;
+			background: #ECECEC;
+			transition: .4s;
+		}
+		#index_demo > div > div:nth-child(3):hover > a {
+			background: #00bcd4;
+			color: white;
+		}
+
+		#index_demo > div img {
+			width: 120px;
+			height: 120px;
+		}
+			#index_demo > div img:hover {
+				transform: translate(-1px, -1px);
+				box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
+				transition: 0.4s;
+			}
 	</style>
 </head>
 
@@ -23,8 +78,58 @@
 
 	<h2>About This Project</h2>
 	<p>
-		Psychlops is a free toolkit/library for drawing various types of visual stimulus used in the vision science. This is the JavaScript version running on web-browsers. Web-site of project including C++ version is at [osdn.jp](http://psychlops.osdn.jp/).
+		Psychlops is a free toolkit/library for drawing various types of visual stimulus used in the vision science. This is the JavaScript version running on web-browsers. Web-site of project including C++ version is at <a href="http://psychlops.osdn.jp/">osdn.jp</a>.
 	</p>
+
+	<h2>Samples</h2>
+	<div id="index_demo">
+		<div>
+			<div>CSF (space)</div>
+			<div><a href="psychlops.player.html#samples/ContrastSensitivity_space.cpp" target="_blank"><img src="samples/ContrastSensitivity_space.png" /></a></div>
+			<div><a href="psychlops.editor.html#samples/ContrastSensitivity_space.cpp" target="_blank">EDIT</a></div>
+		</div>
+		<div>
+			<div>CSF (temporal)</div>
+			<div><a href="psychlops.player.html#samples/ContrastSensitivity_temp.cpp" target="_blank"><img src="samples/ContrastSensitivity_temp.png" /></a></div>
+			<div><a href="psychlops.editor.html#samples/ContrastSensitivity_temp.cpp" target="_blank">EDIT</a></div>
+		</div>
+		<div>
+			<div>Lilac Chaser</div>
+			<div><a href="psychlops.player.html#samples/visiome/LilacChaser.cpp" target="_blank"><img src="samples/visiome/LilacChaser.gif" /></a></div>
+			<div><a href="psychlops.editor.html#samples/visiome/LilacChaser.cpp" target="_blank">EDIT</a></div>
+		</div>
+		<div>
+			<div>Motion Induced Blindness</div>
+			<div><a href="psychlops.player.html#samples/visiome/MotionInducedBlindness.cpp" target="_blank"><img src="samples/visiome/MotionInducedBlindness.gif" /></a></div>
+			<div><a href="psychlops.editor.html#samples/visiome/MotionInducedBlindness.cpp" target="_blank">EDIT</a></div>
+		</div>
+		<div>
+			<div>Random Dot Stereogram</div>
+			<div><a href="psychlops.player.html#samples/visiome/RandomDotStereogram.cpp" target="_blank"><img src="samples/visiome/RandomDotStereogram.gif" /></a></div>
+			<div><a href="psychlops.editor.html#samples/visiome/RandomDotStereogram.cpp" target="_blank">EDIT</a></div>
+		</div>
+		<div>
+			<div>Motion induced position shift</div>
+			<div><a href="psychlops.player.html#samples/visiome/MotionInducedPositionShift.cpp" target="_blank"><img src="samples/visiome/MotionInducedPositionShift.gif" /></a></div>
+			<div><a href="psychlops.editor.html#samples/visiome/MotionInducedPositionShift.cpp" target="_blank">EDIT</a></div>
+		</div>
+		<div>
+			<div>2f3f</div>
+			<div><a href="psychlops.player.html#samples/visiome/2f3f.cpp" target="_blank"><img src="samples/visiome/2f3f.gif" /></a></div>
+			<div><a href="psychlops.editor.html#samples/visiome/2f3f.cpp" target="_blank">EDIT</a></div>
+		</div>
+		<div>
+			<div>CIE L*u*v* viewer</div>
+			<div><a href="psychlops.player.html#samples/CIELuv_demo.cpp" target="_blank"><img src="samples/CIELuv_demo.png" /></a></div>
+			<div><a href="psychlops.editor.html#samples/CIELuv_demo.cpp" target="_blank">EDIT</a></div>
+		</div>
+		<div>
+			<div>CIE L*a*b* viewer</div>
+			<div><a href="psychlops.player.html#samples/CIELab_demo.cpp" target="_blank"><img src="samples/CIELab_demo.png" /></a></div>
+			<div><a href="psychlops.editor.html#samples/CIELab_demo.cpp" target="_blank">EDIT</a></div>
+		</div>
+	</div>
+
 
 	<h2>Getting Started</h2>
 	<p>
@@ -35,89 +140,30 @@
 		<li><a href="import/doc/GettingStarted">How to use online editor</a></li>
 	</ul>
 
-	<h3>Step-by-step tutorial for begginers</h3>
-	<ul>
-		<li><a href="psychlops.editor.html#samples/tutorial/1.cpp" target="_blank">Step 1</a></li>
-		<li><a href="psychlops.editor.html#samples/tutorial/2.cpp" target="_blank">Step 2</a></li>
-		<li><a href="psychlops.editor.html#samples/tutorial/3-1a.cpp" target="_blank">Step 3-1a</a></li>
-		<li><a href="psychlops.editor.html#samples/tutorial/3-1b.cpp" target="_blank">Step 3-1b</a></li>
-		<li><a href="psychlops.editor.html#samples/tutorial/3-1c.cpp" target="_blank">Step 3-1c</a></li>
-		<li><a href="psychlops.editor.html#samples/tutorial/3-2a.cpp" target="_blank">Step 3-2a</a></li>
-		<li><a href="psychlops.editor.html#samples/tutorial/3-2b.cpp" target="_blank">Step 3-2b</a></li>
-		<li><a href="psychlops.editor.html#samples/tutorial/3-2a.cpp" target="_blank">Step 4-1a</a></li>
-		<li><a href="psychlops.editor.html#samples/tutorial/3-2b.cpp" target="_blank">Step 4-1b</a></li>
-		<li><a href="psychlops.editor.html#samples/tutorial/3-2a.cpp" target="_blank">Step 4-1c</a></li>
-		<li><a href="psychlops.editor.html#samples/tutorial/3-2b.cpp" target="_blank">Step 3-2b</a></li>
-	</ul>
-
-	<h2>Sample program</h2>
-	<table>
-		<tr>
-			<th>CSF (space)</th>
-			<td></td>
-			<td><a href="psychlops.player.html#samples/ContrastSensitivity_space.cpp" target="_blank">(Run)</a></td>
-			<td><a href="psychlops.editor.html#samples/ContrastSensitivity_space.cpp" target="_blank">(Open in editor)</a></td>
-			<td><a href="ContrastSensitivity_space.html" target="_blank">(Stand alone version)</a></td>
-		</tr>
-		<tr>
-			<th>CSF (temporal)</th>
-			<td></td>
-			<td><a href="psychlops.player.html#samples/ContrastSensitivity_temp.cpp" target="_blank">(Run)</a></td>
-			<td><a href="psychlops.editor.html#samples/ContrastSensitivity_temp.cpp" target="_blank">(Open in editor)</a></td>
-			<td><a href="ContrastSensitivity_temp.html" target="_blank">(Stand alone version)</a></td>
-		</tr>
-		<tr>
-			<th>Lilac Chaser</th>
-			<td></td>
-			<td><a href="psychlops.player.html#samples/visiome/LilacChaser.cpp" target="_blank">(Run)</a></td>
-			<td><a href="psychlops.editor.html#samples/visiome/LilacChaser.cpp" target="_blank">(Open in editor)</a></td>
-		</tr>
-		<tr>
-			<th>Motion Induced Blindness</th>
-			<td></td>
-			<td><a href="psychlops.player.html#samples/visiome/MotionInducedBlindness.cpp" target="_blank">(Run)</a></td>
-			<td><a href="psychlops.editor.html#samples/visiome/MotionInducedBlindness.cpp" target="_blank">(Open in editor)</a></td>
-		</tr>
-		<tr>
-			<th>Random Dot Stereogram</th>
-			<td></td>
-			<td><a href="psychlops.player.html#samples/visiome/RandomDotStereogram.cpp" target="_blank">(Run)</a></td>
-			<td><a href="psychlops.editor.html#samples/visiome/RandomDotStereogram.cpp" target="_blank">(Open in editor)</a></td>
-		</tr>	
-		<tr>
-			<th>Motion induced position shift</th>
-			<td></td>
-			<td><a href="psychlops.player.html#samples/visiome/MotionInducedPositionShift.cpp" target="_blank">(Run)</a></td>
-			<td><a href="psychlops.editor.html#samples/visiome/MotionInducedPositionShift.cpp" target="_blank">(Open in editor)</a></td>
-		</tr>
-		<tr>
-			<th>2f3f</th>
-			<td></td>
-			<td><a href="psychlops.player.html#samples/visiome/2f3f.cpp" target="_blank">(Run)</a></td>
-			<td><a href="psychlops.editor.html#samples/visiome/2f3f.cpp" target="_blank">(Open in editor)</a></td>
-		</tr>
-		<tr>
-			<th>CIE L*u*v* viewer</th>
-			<td></td>
-			<td><a href="psychlops.player.html#samples/CIELuv_demo.cpp" target="_blank">(Run)</a></td>
-			<td><a href="psychlops.editor.html#samples/CIELuv_demo.cpp" target="_blank">(Open in editor)</a></td>
-		</tr>
-		<tr>
-			<th>CIE L*a*b* viewer</th>
-			<td></td>
-			<td><a href="psychlops.player.html#samples/CIELab_demo.cpp" target="_blank">(Run)</a></td>
-			<td><a href="psychlops.editor.html#samples/CIELab_demo.cpp" target="_blank">(Open in editor)</a></td>
-		</tr>
+	<h2>Step-by-step tutorial for begginers</h2>
+	<table class="table">
+		<tr><th><a href="psychlops.editor.html#samples/tutorial/1.cpp" target="_blank">Step 1</a></th></tr>
+		<tr><th><a href="psychlops.editor.html#samples/tutorial/2.cpp" target="_blank">Step 2</a></th></tr>
+		<tr><th><a href="psychlops.editor.html#samples/tutorial/3-1a.cpp" target="_blank">Step 3-1a</a></th></tr>
+		<tr><th><a href="psychlops.editor.html#samples/tutorial/3-1b.cpp" target="_blank">Step 3-1b</a></th></tr>
+		<tr><th><a href="psychlops.editor.html#samples/tutorial/3-1c.cpp" target="_blank">Step 3-1c</a></th></tr>
+		<tr><th><a href="psychlops.editor.html#samples/tutorial/3-2a.cpp" target="_blank">Step 3-2a</a></th></tr>
+		<tr><th><a href="psychlops.editor.html#samples/tutorial/3-2b.cpp" target="_blank">Step 3-2b</a></th></tr>
+		<tr><th><a href="psychlops.editor.html#samples/tutorial/3-2a.cpp" target="_blank">Step 4-1a</a></th></tr>
+		<tr><th><a href="psychlops.editor.html#samples/tutorial/3-2b.cpp" target="_blank">Step 4-1b</a></th></tr>
+		<tr><th><a href="psychlops.editor.html#samples/tutorial/3-2a.cpp" target="_blank">Step 4-1c</a></th></tr>
+		<tr><th><a href="psychlops.editor.html#samples/tutorial/3-2b.cpp" target="_blank">Step 3-2b</a></th></tr>
 	</table>
 
 
-	<h2>Reference Manual</h2>
+
+	<h2>Manual</h2>
 	<ul>
 		<li><a href="import/doc/ReferenceManual">Function Lists</a></li>
 	</ul>
 
 
-	<h2>Installation on the web server</h2>
+	<h3>Installation on the web server</h3>
 	<ul>
 		<li><a href="import/doc/InstallGuide">User's guide for installation on web server</a></li>
 	</ul>
