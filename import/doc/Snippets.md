@@ -1,4 +1,4 @@
 Code Snippets
 ==========================
 
-- [Basic code](Snippets_Basic)
+- [Snippets_Basic](Snippets_Basic)
