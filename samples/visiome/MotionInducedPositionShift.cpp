@@ -15,12 +15,12 @@ void psychlops_main()
 
 	Color background_color(127.0 / 255.0);
 
-	double rect_size = 160 * pxr, freq = 0.025, contrast = 0.4, phase = 0, vel = 10.0;
+	double rect_size = 160 * pxr, wavelength = 40, contrast = 0.4, phase = 0, vel = 10.0;
 
 	Widgets::Slider slider[4];
 	Interval rng;
-	slider[0].link(rect_size, "Rect Size", 1 <= rng <= 500, 20, 1);
-	slider[1].link(freq, "Sptial Frequency", 0 <= rng <= 1, 10.0 / 1024, 10.0 / 1024);
+	slider[0].link(diameter, "diameter", 1 <= rng <= 500, 20, 1);
+	slider[1].link(wavelength, "wavelength", 0 <= rng <= 1, 10.0 / 1024, 10.0 / 1024);
 	slider[2].link(vel, "Velocity", 0.0 <= rng <= 30.0, 100.0 / 1024, 100.0 / 1024);
 	slider[3].link(contrast, "Contrast", 0.0 <= rng <= 1.0, 100.0 / 1024, 100.0 / 1024);
 
@@ -37,7 +37,7 @@ void psychlops_main()
 
 		gbr.contrast = contrast;
 		gbr.orientation = PI/2.0;
-		gbr.wavelength = 1.0 / freq;
+		gbr.wavelength = wavelength;
 		if (!stop) { phase += vel/360 * 2 * PI; }
 
 		gbr.phase = -phase;

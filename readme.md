@@ -13,7 +13,6 @@ Samples with online editor
 - [Motion Induced Blindness](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/MotionInducedBlindness.cpp)
 - [Random Dot Stereogram](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/RandomDotStereogram.cpp)
 - [Motion induced position shift](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/MotionInducedPositionShift.cpp)
-- [Global Plaid](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/GlobalPlaid_Shader.cpp)
 - [2f3f](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/2f3f.cpp)
 - [CIE Luv viewer](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/CIELuv_demo.cpp) ! Chromaticities of RGB of the display is assumed to be same to sRGB.
 - [CIE Lab viewer](https://hosokawakenchi.github.io/PsychlopsJS/psychlops.editor.html#samples/CIELab_demo.cpp) ! Chromaticities of RGB of the display is assumed to be same to sRGB.
