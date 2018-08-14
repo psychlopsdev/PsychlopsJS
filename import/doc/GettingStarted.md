@@ -1,14 +1,29 @@
-Getting Started
-==========================
+Getting Started - How to use online editor
+==============================================
 
-At the first, please push "Compile & Run" button to run current program. If your browser is supported by the toolkit, green rectangle on the gray background will appear by the default program.
-
-![Image](GettingStarted_CompileButton.png)
+![Image](GettingStarted.png)
 
 
-## Editor area
+## 1. Editor area
+Edit your code here.
 
 
+## 2. Execution Buttons
+
+### "Compile & Run"
+Push this button to run current program.
+
+### "Console"
+If this switch is active, log will be written at the bottom of execution window.
+
+### "Debug Mode"
+If this switch is active, realtime variable watcher will appear at the bottom of execution window.
+
+
+## 3. File Buttons
+
+### Results
+Not yet implemented.
 
 #### Open
 Open a dialog box to load local program files.
@@ -20,8 +35,13 @@ Open a dialog box to save current program to local storage.
 Open a dialog box to load image files from local storage.
 
 
-## Auxiliary functions
+## 4. Auxiliary Buttons
 
-### Setting
+### Export (Export icon)
+Not yet implemented.
 
-### Manual
+### Setting (Gear icon)
+Open a setting dialog.
+
+### Manual (? icon)
+If this switch is active, the reference manual will appear at the right side of editor area.
