@@ -1,7 +1,7 @@
 ﻿About This Project
 ====================
 
-Psychlops is a frer toolkit/library for drawing various types of visual stimulus used in the vision science. This is the JavaScript version running on web-browsers. Web-site of project including C++ version is at [osdn.jp](http://psychlops.osdn.jp/).
+Psychlops is a frer toolkit/library for drawing various types of visual stimulus used in the vision science. This is the JavaScript version running on web-browsers. Main page is at [GitHub Pages](https://hosokawakenchi.github.io/PsychlopsJS/). Web-site of project including C++ version is at [osdn.jp](http://psychlops.osdn.jp/).
 
 
 Samples with online editor

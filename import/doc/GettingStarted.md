@@ -1,6 +1,9 @@
 Getting Started - How to use online editor
 ==============================================
 
+- Edit your code in Editor area at the center of the window, and execute your code by pushing "Compile & Run" button at the left-top of the window.
+- Your code will be saved automatically in your cookie before every execution.
+
 ![Image](GettingStarted.png)
 
 
