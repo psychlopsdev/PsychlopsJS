@@ -399,7 +399,9 @@
 			};
 			//Psychlops.Extensions.Visualize.setArea("plot_area", "plot_console");
 			Psychlops.Variables.debugCallback = function () {
-				$("#psychlops_watchlist").html(Psychlops.Variables.enumerateHTML());
+				if (Psychlops.Variables.watchListName.length < 10) {
+					$("#psychlops_watchlist").html(Psychlops.Variables.enumerateHTML());
+				}
 			};
 			Psychlops.Data.savearrayCallback = function (text, filename) {
 				$("#savearray").val(text);
