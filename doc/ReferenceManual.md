@@ -29,9 +29,7 @@ Classes
 ### I/O
 
 - [Clock](Clock)
-
 - HID
 	- [Keyboard](Keyboard)
 	- [Mouse](Mouse)
-
 - *[Audio]()*
