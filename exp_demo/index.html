@@ -1,0 +1,631 @@
+﻿<!DOCTYPE html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#157878">
+
+	<title>PsychlopsJS</title>
+
+	<link rel="stylesheet" href="import/doc/air.css">
+	<script src="import/gen/jquery-3.2.0.min.js"></script>
+
+	<base href="./" id="base_href" />
+
+	<style type="text/css">
+		h2 {
+			margin-top: 2em;
+		}
+
+		#index_demo {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+
+		#index_demo > div {
+			display: flex;
+			width: 120px;
+			flex-direction: column;
+			flex-wrap: nowrap;
+			justify-content: center;
+			align-items: stretch;
+			align-content: flex-start;
+			margin: 0.5em;
+			padding: 0.5em;
+			box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.2);
+			text-align: center;
+		}
+
+		#index_demo > div > div:first-child {
+			font-weight: bold;
+			font-family: 'arial narrow';
+			line-height: 120%;
+			height: 220%;
+			margin-bottom: 0.5em;
+		}
+
+		.flatbutton, #index_demo > div > div:nth-child(3) > a {
+			position: relative;
+			display: inline-block;
+			font-weight: bold;
+			padding: 0.25em 0.5em;
+			text-decoration: none;
+			color: #00BCD4;
+			background: #ECECEC;
+			transition: .4s;
+		}
+
+		.flatbutton, ##index_demo > div > div:nth-child(3):hover > a {
+			background: #00bcd4;
+			color: white;
+		}
+
+		#index_demo > div img {
+			width: 120px;
+			height: 120px;
+		}
+
+		#index_demo > div img:hover {
+			transform: translate(-1px, -1px);
+			box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.2);
+			transition: 0.4s;
+		}
+
+		.modal {
+			position: absolute;
+			top: 50px;
+			left: 50%;
+			z-index: 20;
+			margin-left: -325px;
+			width: 650px;
+			overflow-x: hidden;
+			border-radius: 2px;
+			background: #fff;
+			-webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+			box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+			display: none;
+		}
+		.modal-header {
+			text-align: right;
+		}
+		.modal-title {
+			text-align: center;
+		}
+		.modal-footer {
+			text-align: right;
+			margin: 1em;
+		}
+		.buttons {
+			margin: 1em;
+			padding: 1ex;
+			background: white;
+			border: 1px solid gray;
+			border-radius: 5px;
+		}
+		.buttons:hover {
+			background: #eeeeee;
+		}
+	</style>
+</head>
+
+
+<body id="the_body">
+
+	<h2>
+		「心理量と物理量」実験プログラム
+	</h2>
+
+	<ul>
+		<li>
+			オンライン版
+			<ul>
+				<li>
+					幾何学的錯視(ミュラー・リヤー錯視）の測定
+					<ul>
+						<li><a href="MullerLyer_DemoExpt.html" target="_blank">測定する</a></li>
+						<li><a href="javascript:void(0)" onclick="showResultsML();">グラフを見る</a></li>
+					</ul>
+				</li>
+				<li>
+					時間的に安定しない錯覚（方位残効）の測定<br />
+					<ul>
+						<li>
+							<a href="javascript:void(0)" onclick="launchTAE(1);">測定する（順応刺激角0°）</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)" onclick="launchTAE(2);">測定する（順応刺激角11.3°）</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)" onclick="launchTAE(0);">測定する（順応刺激角22.5°）</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)" onclick="launchTAE(3);">測定する（順応刺激角45°）</a>
+						</li>
+						<li>
+							<a href="javascript:void(0)" onclick="showResultsTAE();">グラフを見る</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					オンライン版は現在のところデスクトップPC上で動作する以下のブラウザで実行を確認しています。
+					<ul>
+						<li>Safari (バージョン10以降）/ Chrome （バージョン60以降）/ Edge（バージョン40以降）</li>
+						<li>現在IEブラウザでは動作しません。</li>
+						<li>お使いの環境によって動作しないことがあります。Safari, Chromeでの実行を推奨いたします。</li>
+						<li>お使いの環境によって精確な提示が出来ない場合があります。</li>
+						<ul>
+							<li>「この環境では表示が不正確な可能性が高い」というメッセージが出ることがあります。</li>
+							<li>上記メッセージが出た場合、他のアプリを終了し、ブラウザを立ち上げなおして再度実験をしてみてください。</li>
+							<li>それでも解決しない場合、ディスプレイドライバの垂直同期の設定を強制的にONにする、ブラウザの全画面表示を利用するなどの設定をお試しください。</li>
+							<li>（このメッセージが表示される場合でも実験の実施は可能です。）</li>
+						</ul>
+					</ul>
+			</ul>
+		</li>
+
+
+
+		<li>
+			ダウンロード版
+			<ul>
+				<li><a href="experiments.zip" target="_blank">[ZIPファイルをダウンロード]</a></li>
+				<li>
+					ダウンロード版は現在のところ以下のブラウザでの動作を確認しています。
+					<ul>
+						<li>Safari (バージョン10以降）/ Chrome （バージョン60以降）</li>
+						<li>現在のところEdge, IEブラウザではオフライン版は動作しません。</li>
+					</ul>
+				<li>[使い方]　ダウンロードしたzipファイルを解凍し、できたフォルダの中にあるindex.htmlファイルを上記ブラウザのいずれかから閲覧してください</li>
+			</ul>
+		</li>
+	</ul>
+	<h4>責任の制限</h4>
+	<p>
+		このソフトウェアの作成者は、このソフトウェアの利用に関連して生じる直接損害、間接損害、偶発的な損害、特別損害、懲罰的損害、または結果損害を含め、営業権の損失、業務の停止、コンピューター障害または誤作動、その他の商業上の損害や損失など、いかなる損害に対しても、たとえそうした損害の可能性をたとえ知らされていたとしても、利用者に対する責任を負わないものとします。
+	</p>
+	<div id="footer">
+		<p>
+			These demos are developed with <a href="https://psychlopsdev.github.io/PsychlopsJS/">PsychlopsJS</a><br />
+			Created by Kazushi Maruya and Kenchi Hosokawa
+		</p>
+	</div>
+
+
+
+	<div id="ml_modal" class="modal">
+		<div class="modal-header">
+			<button type="button" class="buttons" onclick="closeMLModal();">&times;</button>
+			<h4 class="modal-title">結果</h4>
+		</div>
+		<div class="modal-body">
+			<div id="result_window_for_ML_area">
+			</div>
+			<div>
+				<img style="display:none;width:600px;height:500px" id="img_ML_png" />
+			</div>
+		</div>
+		<div class="modal-footer">
+			<!--<button type="button" class="buttons" onclick="printDiv('result_window_for_ML_area');">印刷</button>-->
+			<button type="button" class="buttons" onclick="downloadPlot('result_window_for_ML_area', 'MullerLyer');">グラフをダウンロード</button>
+			<button type="button" class="buttons" onclick="closeModal('ml_modal');">閉じる</button>
+		</div>
+	</div>
+
+	<div id="tae_modal" class="modal">
+		<div class="modal-header">
+			<button type="button" class="buttons" onclick="closeModal('tae_modal');">&times;</button>
+			<h4 class="modal-title">結果</h4>
+		</div>
+		<div class="modal-body">
+			<div id="result_window_for_TAE_area">
+			</div>
+			<div>
+				<img style="display:none;width:600px;height:500px" id="img_TAE_png"  />
+			</div>
+		</div>
+		<div class="modal-footer">
+			<!--<button type="button" class="buttons" onclick="printDiv('result_window_for_TAE_area');">印刷</button>-->
+			<button type="button" class="buttons" onclick="downloadPlot('result_window_for_TAE_area', 'TiltAfterEffect');">グラフをダウンロード</button>
+			<button type="button" class="buttons" onclick="closeModal('tae_modal');">閉じる</button>
+		</div>
+	</div>
+
+	<div>
+		<script src="import/gen/plotly-latest.min.js"></script>
+		<script type="text/javascript">
+			// https://plot.ly/javascript/
+			// https://plot.ly/javascript/reference/
+			// https://plot.ly/javascript/plotlyjs-function-reference/#plotlytoimage
+
+			var DEBUG_MODE = 3;
+			var TITLE_FONT_SIZE = 22;
+
+			var launchTAE = function (condition) {
+				localStorage.setItem("Psychlops.TiltCondition", condition);
+				var childWindow = window.open("TAEWebCode_4cond.html");
+			}
+
+			var printDiv = function (target_name) {
+				var target = $('#' + target_name);
+				var parent = target.parent();
+				var div = $("<div id='printzone'></div>");
+				div.append(target);
+				$("body>*:not(#footer)").hide();
+				$("#footer").prepend(div);
+				window.print();
+				$("body>*:not(#footer)").show();
+				parent.prepend(target);
+				div.remove();
+			}
+
+			var downloadPlot = function (graphDiv_id, filename) {
+				Plotly.downloadImage(graphDiv_id, { format: 'png', width: 600, height: 500, filename: filename });
+			}
+
+			function DBsetup() {
+				//https://developer.mozilla.org/ja/docs/IndexedDB
+				var db;
+				var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+				if (indexedDB) {
+					var dbreq = indexedDB.open("PsychlopsResults", 1.0);
+					dbreq.onupgradeneeded = function (ev) {
+						var db = ev.target.result;
+						ev.target.transaction.onerror = function (err) { };
+						if (db.objectStoreNames.contains('PsychlopsResults')) { db.deleteObjectStore('PsychlopsResults'); }
+						var store = db.createObjectStore("session", { keyPath: "filename" });
+					}
+					dbreq.onsuccess = function (ev) {
+						resultsDB = dbreq.result;
+					};
+				} else {
+				}
+			}
+			DBsetup();
+			function DBgetAllResults(callback) {
+				if (resultsDB) {
+					DBallResults = null;
+					var all = [];
+					var db = resultsDB;
+					var tx = db.transaction(["session"], "readwrite");
+					var store = tx.objectStore("session");
+					var range = IDBKeyRange.lowerBound(0);
+					var cursorRequest = store.openCursor(range);
+					cursorRequest.onsuccess = function (e) {
+						var cursor = e.target.result;
+						if (cursor) {
+							all.push(cursor.value);
+							cursor.continue();
+						} else {
+							//if (all.length == 0) { alert("No data."); }
+							callback(all);
+						}
+					}
+					cursorRequest.onerror = function (err) { alert("An error occurred while reading results database.") }
+				} else {
+					var all = [];
+					for (var i = 0; i < localStorage.length; i++) {
+						key = localStorage.key(i);
+						if (key.indexOf(pseudoDBkey) == 0) {
+							all.push(JSON.parse(localStorage.getItem(key)));
+						}
+					}
+					callback(all);
+				}
+			}
+			var getResultFiles = function (list, target, participant_id) {
+				var date, elapsed, participant;
+				var file_lists = [];
+				for (var i = 0; i < list.length; i++) {
+					//alert(list[i].filename)
+					if ((new RegExp(target)).test(list[i].filename)) {
+						var matched1 = list[i].body.match(/^participant,(.*)/m);
+						participant = matched1[1];
+						if (participant == participant_id) {
+							date = /(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})/.exec(list[i].filename);
+							date = date[1] + "/" + date[2] + "/" + date[3] + " " + date[4] + ":" + date[5];
+							var active_timestamp = date[0];
+							if (/^Elapsed,(.+)/m.test(list[i].body)) elapsed = list[i].body.match(/^Elapsed,(.+)/m)[1];
+
+							file_lists.push(
+								{ "body": list[i].body, "participant": participant, "date": date, "elapsed": elapsed }
+							);
+						}
+					}
+				}
+				return file_lists;
+			}
+			var getResultFile = function (list, target, participant_id) {
+				var list = getResultFiles(list, target, participant_id);
+				if (list.length == 0) {
+					return null;
+				} else {
+					return list[list.length - 1];
+				}
+			}
+
+
+			var showResultsML = function () {
+				var callback = function (list) {
+					var result = getResultFile(list, "ML_", "");
+
+					let raw_list = [[], [], []];
+					let raw_list_a = [[], [], []];
+					let raw_list_v = [[], [], []];
+					let legend;
+					if (result != null) {
+						date = result.date;
+						elapsed = result.elapsed;
+
+						let body = result.body.split(/\r\n|\n|\r/);
+						legend = body[2].split(",");
+
+						for (let i = 0; i < body.length - 4; i++) {
+							var line = body[i + 3].split(",");
+							let line_cells = {};
+							for (let j = 0; j < legend.length; j++) {
+								line_cells[legend[j]] = parseFloat(line[j]);
+							}
+							if (line_cells["Series"] <= 240) {
+								raw_list[0].push(line_cells);
+							} else {
+								raw_list[1].push(line_cells);
+							}
+						}
+						for (let j = 0; j < 2; j++) {
+							raw_list[j].sort(function (a, b) { if (a.Angle < b.Angle) { return 1; } else if (a.Angle > b.Angle) { return -1; } else { return 0; } });
+						}
+						for (let i = 0; i < raw_list[0].length / 2; i++) {
+							raw_list_a[2].push({ Angle: raw_list[0][i * 2]["Angle"], PSE: 0 });
+						}
+						console.log("raw_list_a");
+						console.log(JSON.stringify(raw_list_a));
+						console.log("raw_list");
+						console.log(JSON.stringify(raw_list));
+						for (let j = 0; j < 2; j++) {
+							for (let i = 0; i < raw_list[j].length / 2; i++) {
+								raw_list_a[2][i]["PSE"] += raw_list[j][i * 2]["PSE"] + raw_list[j][i * 2 + 1]["PSE"];
+							}
+						}
+						for (let i = 0; i < raw_list_a[2].length; i++) { raw_list_a[2][i]["PSE"] /= 4; }
+
+
+						//alert(JSON.stringify(raw_list1));
+						//alert(JSON.stringify(raw_list2));
+					}
+
+					let names = ['Ascending runs', 'Descending runs', 'Total Average'];
+					let colors = ['#AAA', '#666'];
+					let symbols = ["triangle-up-open", "triangle-down-open"];
+					let trace = [null, null, null];
+					for (let j = 0; j < 2; j++) {
+						trace[j] = {
+							x: [],
+							y: [],
+							mode: 'markers',
+							type: 'scatter',
+							marker: {
+								size: 8,
+								symbol: symbols[j],
+								color: colors[j],
+							},
+							name: names[j]
+						};
+						for (var i = 0; i < raw_list[j].length; i++) { trace[j].x.push(raw_list[j][i].Angle); trace[j].y.push(raw_list[j][i].PSE); }
+					}
+					trace[2] = {
+						x: [],
+						y: [],
+						mode: 'lines+markers',
+						type: 'scatter',
+						marker: {
+							size: 15,
+						},
+						line: {
+							dash: 'dot',
+							width: 4,
+						},
+						//error_y: {
+						//	type: 'data',
+						//	array: raw_list_v[j],
+						//	visible: true
+						//},
+						name: names[2]
+					};
+					//for(var i = 0; i < raw_list_a[2].length; i++) { trace[2].x.push(raw_list_a[2][i].Angle); trace[2].y.push(raw_list_a[2][i].PSE); }
+					for (var i = 0; i < raw_list_a[2].length; i++) { trace[2].x.push(raw_list_a[2][i].Angle); trace[2].y.push(raw_list_a[2][i].PSE); }
+
+
+					var data = [trace[2], trace[0], trace[1]];
+					var layout = {
+						width: 600,
+						height: 500,
+						title: { text: '<b>Müller-Lyer Illusion</b>', font: { size: TITLE_FONT_SIZE } },
+						xaxis: {
+							title: { text: 'Angle', font: { size: TITLE_FONT_SIZE } },
+							linecolor: '#000',
+							linewidth: 1,
+							autotick: false,
+							tickfont: { family: 'Arial, sans-serif', size: 18, color: 'black' },
+							ticks: 'outside',
+							//type: 'log',
+							//tick0: 0,
+							dtick: 30,
+							showgrid: false,
+							gridcolor: "transparent",
+							range: [0, 180]
+						},
+						yaxis: {
+							title: { text: 'PSE', font: { size: TITLE_FONT_SIZE } },
+							tickfont: { family: 'Arial, sans-serif', size: 18, color: 'black' },
+							linecolor: '#000',
+							linewidth: 1,
+							autotick: false,
+							ticks: 'outside',
+							tick0: 120,
+							dtick: 120,
+							//ticklen: 8,
+							//tickwidth: 2,
+							//type: 'log',
+							showgrid: false,
+							gridcolor: "transparent",
+							range: [120-10, 360+10]
+						}
+					};
+					Plotly.newPlot('result_window_for_ML_area', data, layout, { displayModeBar: false })
+						;//.then(function (gd) {
+						//	Plotly.toImage(gd, { height: 500, width: 600 })
+						//		.then(
+						//			function (url) {
+						//				$("#img_ML_png").attr("src", url);
+						//				return Plotly.toImage(gd, { format: 'png', height: 500, width: 600 });
+						//			}
+						//		)
+						//});
+					$("#ml_modal").show();
+				}
+				DBgetAllResults(callback);
+			}
+			function closeMLModal() {
+				$("#ml_modal").hide();
+			}
+
+
+			var showResultsTAE = function () {
+				var callback = function (list) {
+					var result = [
+						getResultFile(list, "TAE_average_0", ""),
+						getResultFile(list, "TAE_average_11.3", ""),
+						getResultFile(list, "TAE_average_22.5", ""),
+						getResultFile(list, "TAE_average_45", ""),
+					];
+
+					let raw_list = [[], [], [], [], []];
+					let raw_list_a = [[], [], [], []];
+					let raw_list_v = [[], [], [], []];
+					let legend;
+					for (let k = 0; k < result.length; k++) {
+						if (result[k] != null) {
+							date = result[k].date;
+							elapsed = result[k].elapsed;
+
+							let body = result[k].body.split(/\r\n|\n|\r/);
+							legend = body[2].split(",");
+
+							for (let i = 0; i < body.length - 4; i++) {
+								var line = body[i + 3].split(",");
+								let line_cells = {};
+								for (let j = 0; j < legend.length; j++) {
+									line_cells[legend[j]] = parseFloat(line[j]);
+								}
+								raw_list[0].push(line_cells['Angle']);
+								raw_list[1].push(line_cells[' test 0 deg']);
+								raw_list[2].push(line_cells[' test 11.3 deg']);
+								raw_list[3].push(line_cells[' test 22.5 deg']);
+								raw_list[4].push(line_cells[' test 45 deg']);
+							}
+
+							//alert(JSON.stringify(raw_list[0]));
+						}
+					}
+
+					let colors = ['#800', '#440', '#800', '#440'];
+					let symbols = ["square", "circle", "diamond-dot", "hexagon-dot"];
+					let dashes = ["solid", "dot", "dash", "longdash"];
+					let names = ['test 0 deg', 'test 11.3 deg', 'test 22.5 deg', 'test 45 deg'];
+					let trace = [null, null, null, null];
+					for (let j = 0; j < 4; j++) {
+						trace[j] = {
+							x: [],
+							y: [],
+							mode: 'lines+markers',
+							type: 'scatter',
+							marker: {
+								size: 15,
+								symbol: symbols[j],
+								//color: colors[j],
+							},
+							line: {
+								dash: dashes[j],
+								width: 4,
+							},
+							error_y: {
+								type: 'data',
+								array: raw_list_v[j],
+								visible: true
+							},
+							name: names[j]
+						};
+						for (var i = 0; i < raw_list[j].length; i++) { trace[j].x.push(raw_list[0][i]); trace[j].y.push(raw_list[j+1][i]); }
+					}
+					trace_chance = {
+						x: [-4, 4],	y: [0.5, 0.5],
+						mode: 'lines',
+						type: 'scatter',
+						line: { dash: "dot", width: 4, color: "#CCC", },
+						name: "Chance Level"
+					};
+					var data = [trace_chance, trace[0], trace[1], trace[2], trace[3]];
+					var layout = {
+						width: 600,
+						height: 500,
+						title: { text: '<b>Tilt After Effect</b>', font: { size: TITLE_FONT_SIZE } },
+						xaxis: {
+							title: { text: 'Rotation of test-bars (deg)', font: { size: TITLE_FONT_SIZE } },
+							linecolor: '#000',
+							linewidth: 1,
+							tickfont: { family: 'Arial, sans-serif', size: 18, color: 'black' },
+							autotick: false,
+							ticks: 'outside',
+							//type: 'log',
+							tick0: 0,
+							dtick: 1,
+							showgrid: false,
+							gridcolor: "transparent",
+							range: [-4, 4]
+						},
+						yaxis: {
+							title: { text: 'Response ratio', font: { size: TITLE_FONT_SIZE } },
+							linecolor: '#000',
+							linewidth: 1,
+							tickfont: { family: 'Arial, sans-serif', size: 18, color: 'black' },
+							autotick: false,
+							ticks: 'outside',
+							tick0: 0,
+							dtick: 0.25,
+							showgrid: false,
+							gridcolor: "transparent",
+							//ticklen: 8,
+							//tickwidth: 2,
+							//type: 'log',
+							range: [0, 1+0.1]
+						}
+					};
+					Plotly.newPlot('result_window_for_TAE_area', data, layout, { displayModeBar: false })
+					;//.then(function (gd) {
+					//	Plotly.toImage(gd, { height: 500, width: 600 })
+					//	.then(
+					//		function (url) {
+					//			$("#img_TAE_png").attr("src", url);
+					//			return Plotly.toImage(gd, { format: 'png', height: 500, width: 600 });
+					//		}
+					//	)
+					//});
+					$("#tae_modal").show();
+				}
+				DBgetAllResults(callback);
+			}
+
+			function closeModal(id) {
+				$("#" + id).hide();
+			}
+
+
+		</script>
+	</div>
+
+
+</body>
+
+</html>

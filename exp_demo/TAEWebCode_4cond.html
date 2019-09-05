@@ -1,0 +1,766 @@
+﻿<html>
+
+<head>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<title>Psychlops Web Player</title>
+
+    <script src="import/gen/jquery-3.2.0.min.js"></script>
+	<script src="import/gen/jquery.autosize.min.js"></script>
+	<script src="import/gen/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="import/gen/bootstrap.min.css" />
+	<link href="import/gen/bootstrap-toggle.min.css" rel="stylesheet" />
+	<script src="import/gen/bootstrap-toggle.min.js"></script>
+
+	<script src="import/gen/sylvester.js" type="text/javascript"></script>
+	<script src="import/gen/glUtils.js" type="text/javascript"></script>
+
+	<script src="import/psychlops.0.8.0.js" type="text/javascript"></script>
+	<script src="import/psychlops.cppconv.0.8.0.js" type="text/javascript"></script>
+	<script src="import/psychlops.extensions.0.8.0.js" type="text/javascript"></script>
+	<script src="psychlops.config.js" type="text/javascript"></script>
+
+	<script src="import/gen/sprintf.js"></script>
+
+	<!-- CLM Tracker -->
+	<script src="import/clm/libs/utils.js"></script>
+	<script src="import/clm/clmtrackr.min.js"></script>
+	<script src="import/clm/libs/Stats.js"></script>
+	<script src="import/clm/models/model_pca_20_svm.js"></script>
+
+
+	<script type="text/javascript">
+		var args = null;
+		function run() {
+			$("#psychlops_powersymbol").hide();
+			Psychlops.Variables.debugMode = $('#debugmode_checkbox').prop('checked');
+			if (Psychlops.Variables.debugMode) {
+				$('#psychlops_watchlist_area').show();
+			} else {
+				$('#psychlops_watchlist_area').hide();
+			}
+			var func = Psychlops.CodeConverter.compile($("#running_program").val());
+			if (args) {
+				Psychlops.Util.run(func, args);
+			} else {
+				Psychlops.Util.run(func);
+			}
+		}
+		function loadCpp(file, immidiate_run) {
+			var filename = file;
+			if (typeof file !== "undefined"
+				&& "indexOf" in file
+				&& file.indexOf("*") >= 0) {
+				var tmp = file.split("*");
+				filename = tmp.shift();
+				args = tmp;
+			}
+			$.ajax({
+				url: filename,
+			}).done(function (data) {
+				var result = data;
+
+				window.location.hash = filename;
+				$("#running_program").val(result);
+
+				if (immidiate_run) {
+					run();
+				}
+
+			}).fail(function (data) {
+				alert('Failed to load ' + filename + '.');
+			});
+		}
+		function loadCppLocal(immidiate_run) {
+			if (immidiate_run) {
+				run();
+			}
+		}
+		$(function () {
+			var hash = null;
+			if (window.location.hash) {
+				hash = window.location.hash.substring(1);
+			} else {
+				if (window.location.href.indexOf("#") > 0) {
+					hash = "";
+				}
+			}
+			var version = Psychlops.Util.getEnvironmentVersion();
+
+			switch (Psychlops.Util.getEnvironmentVersion()) {
+				case Psychlops.Util.EnvironmentVersion.Latest:
+					break;
+				case Psychlops.Util.EnvironmentVersion.Env2013:
+					$("#information_microsoft_edge").show();
+					break;
+			}
+
+			//// Run Psychlops ////
+			Psychlops.Util.canvas_element_id = "glcanvas";
+			Psychlops.Util.window_canvas_container_element_id = "window_canvas_container";
+			Psychlops.Util.fullscreen_canvas_container_element_id = "fullscreen_canvas_container";
+			Psychlops.Util.setConsoleTextarea("psychlops_console");
+			Psychlops.Util.setThrobber("psychlops_throbber");
+			Psychlops.Util.programFinishedCallback = function () {
+				/*
+				var cn = $("#glcanvas");
+				if (cn.css("position").indexOf("fixed") >= 0) {
+					var pare = cn.parent();
+					cn.remove();
+					pare.append($("<canvas id='glcanvas' width='1' height='1' tabindex='0'>We are sorry, but your browser does not seem to support WebGL.</canvas>"));
+				} else {
+				}*/
+				$("#psychlops_powersymbol").show();
+				window.close();
+
+				window.parent.postMessage("finished", window.location.protocol + "//" + window.location.host);
+			};
+			//Psychlops.Extensions.Visualize.setArea("plot_area", "plot_console");
+			Psychlops.Data.savearrayCallback = function (text, filename) {
+				$("#savearray").val(text);
+				$("#savearray_popup").show();
+
+				//Psychlops.Extensions.Visualize.makePlottingConsole("plot_console");
+			};
+			Psychlops.Canvas.resizeCallback = function (width, height) {
+				$("#window_canvas_container").css("width", width);
+			};
+			Psychlops.Util.makeFullscreenCallback = function (width, height) {
+				$("#fullscreen_canvas_container").show();
+			};
+
+
+			if (hash != null) {
+				$("#psychlops_throbber").show();
+				loadCpp(hash, true);
+			} else {
+				loadCppLocal(true);
+			}
+
+			$("#run_button").click(function () {
+				run();
+			});
+
+
+			$(window).on("message", function (e) {
+				var data = e.originalEvent.data;
+				Psychlops.AppInfo.participant_name = data.participant;
+				Psychlops.AppInfo.participant_attr = data.participant_attr;
+				//loadCpp(data.url, true);
+			});
+
+		});
+	</script>
+	<style type="text/css">
+		body {
+			background-color: transparent;
+		}
+	
+		.active_code {
+			background-color: #DDD;
+			font: normal 10pt courier;
+			border: none;
+		}
+
+		canvas:focus {
+			outline: 0 invert none;
+		}
+
+		#window_canvas_container {
+			text-align: center;
+			vertical-align: middle;
+		}
+
+			#window_canvas_container canvas {
+				margin: auto;
+			}
+	</style>
+</head>
+
+
+<body>
+
+	<div id="DistanceWatcher" style="display:none">
+	</div>
+
+	<div id="file_not_specified" style="display:none;visibility:hidden">
+		<div style="margin:1em">
+			<span style="display:none;" id="newcppbox">
+				<label>C++ file: </label>
+				<input id="newcpp" type="text" size="30" value="cpp/ContrastSensitivity.cpp" />
+				<button onclick="loadCpp($('#newcpp').val());">load</button>
+			</span>
+			<label class="checkbox-inline"><input data-toggle="toggle" data-size="small" type="checkbox" onchange="$('#psychlops_console').fadeToggle('fast');" />Console</label>
+			<button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#modal_data">Results</button>
+		</div>
+
+		<div style="text-align:center; margin:2em">
+			<textarea id="running_program" style="display:none;">
+
+//Psychlops Code Template
+//    Please visit following web site to get sample codes.
+//    http://psychlops.osdn.jp/ja/
+
+///+ 0 Setup Psychlops Circumstances
+//// 0 Setup Psychlops Circumstances
+#include <psychlops.h>
+using namespace Psychlops;
+// Psychlops Win32 1.7.0 / 20150205
+///- 0 Setup Psychlops Circumstances
+
+void psychlops_main() {
+	///+ 1 Declaration /////////////////////////////////////////////////////////////
+	//// 1 Declaration
+	
+	AppInfo::expname = "方位残効の測定";
+	
+	// declare default window and variables for its parameters
+	//Canvas cnvs(500,500, Canvas::window);	
+	Canvas cnvs;
+	cnvs.antialiased = true;
+	cnvs.set(800, 600, Canvas::window);
+	double cnvsW = cnvs.getWidth();
+	double cnvsH = cnvs.getHeight();
+	double CANVAS_REFRESHRATE = cnvs.getRefreshRate();
+	double CANVAS_FRAMENUM = 0;
+	Psychlops::Color DEFAULT_BG_COLOR(127.0 / 255.0, 127.0 / 255.0, 127.0 / 255.0, 1.0);
+	
+	Clock topup_before, topup_after;
+	int topup_time_msec;
+	bool prec_error_temporal = false;
+	//declare local variables around here
+
+	double font_size = 24;
+	Font::default_font.size = font_size;
+	///- 1 Declaration /////////////////////////////////////////////////////////////
+
+	///+ 2 Initialization //////////////////////////////////////////////////////////
+	//// 2 Initialization
+
+	// Set initial values for local variables
+	Rectangle elementbar;
+	double stimX = 0, stimY = 0; //(0,0) is set to the display center.
+	double stimH = 240, stimW = 10;
+	elementbar.set(stimW, stimH);
+	elementbar.centering(stimW / 2, 0);
+	Psychlops::Rectangle element;
+	//element.append(elementbar);
+	int rows = 6, cols = 1;
+	double gapbase = 1.0;//stimH*1.5;	
+	double gap; //gap=stimW*(1+gapbase/sin(angle+0.00000001));
+	Psychlops::Ellipse slantorg(stimW, stimW);
+
+	double adaptation = 5, gapperiod = 0.25, test = 0.5, topupadaptation = 40;
+
+	double adaptangle[4];
+	adaptangle[0] = PI / 8;//7*PI/8;
+	adaptangle[1] = 0;
+	adaptangle[2] = PI / 16;
+	adaptangle[3] = PI / 4;
+	const int sessionnumber = 4;
+	const int sessionnumber_now = 1;
+
+	double testangle[7];
+	testangle[0] = PI / 180 * 3.0;
+	testangle[1] = PI / 180 * 2.0;
+	testangle[2] = PI / 180 * 1.0;
+	testangle[3] = PI / 180 * 0.0;
+	testangle[4] = -PI / 180 * 1.0;
+	testangle[5] = -PI / 180 * 2.0;
+	testangle[6] = -PI / 180 * 3.0;
+	const int testcondnum = 7;
+
+	//Make condtion order
+	const int repetition = 8;
+
+	int average[sessionnumber][testcondnum];
+	int totaltrialnum = testcondnum * repetition;
+	int answer[testcondnum][repetition][3];
+	int ansflag[testcondnum];
+
+	for (int i = 0; i < testcondnum; i++)ansflag[i] = 0;
+	int trialseed[1024];
+	for (int i = 0; i < totaltrialnum; i++) { trialseed[i] = i; }
+	int a;
+	int tmp;
+	for (int i = 1; i < totaltrialnum; i++) {
+		a = Psychlops.random(i + 1);
+		tmp = trialseed[i];
+		trialseed[i] = trialseed[a];
+		trialseed[a] = tmp;
+	}
+
+	int sessionseed[4];
+	//for (int i = 0; i < sessionnumber; i++) { sessionseed[i] = i; }
+	//for (int i = 1; i < sessionnumber; i++) {
+	//	a = Psychlops.random(i + 1);
+	//	tmp = sessionseed[i];
+	//	sessionseed[i] = sessionseed[a];
+	//	sessionseed[a] = tmp;
+	//}
+	sessionseed[0] = atoi(AppInfo::localSettings["TiltCondition"]);
+
+	// Draw Offline images around here
+	Psychlops::Letters L01("2回出る線分刺激を目を動かさずじっと見つづけ、", font_size);
+	Psychlops::Letters L02("後ろのものがどちらに折れ曲がっていたかを", font_size);
+	Psychlops::Letters L03("ボタンを押して次の試行を始める", font_size);
+	Psychlops::Letters L04("「＼」または「／」ボタンを押して決定してください。", font_size);
+	Psychlops::Letters L_ERROR("この環境では表示が不正確な可能性が高いです。", font_size);
+	L_ERROR.shift(cnvsW*0.25, cnvs.getHeight() - font_size*0.5);
+	L_ERROR.fill.set(1,0,0);
+	Psychlops::Widgets::Button startbutton("実験を始める", 60);
+	startbutton.centering(cnvsW*0.5, cnvsH*0.5 + 200);
+	Psychlops::Widgets::Button sessionbutton("実験を続ける", 60);
+	sessionbutton.centering(cnvsW*0.5, cnvsH*0.5 + 200);
+	Psychlops::Widgets::Button endbutton("実験を終了する", 60);
+	Psychlops::Widgets::Button sessionendbutton("セッションを終了する", 60);
+	Psychlops::Widgets::Button rightbutton("／", 40);
+	rightbutton.area.set(140, 70);
+	Psychlops::Widgets::Button leftbutton("＼", 40);
+	leftbutton.area.set(140, 70);
+	Psychlops::Widgets::Button downloadbutton("結果ファイルをダウンロードする", 60);
+
+	Psychlops::Letters L001, L002, L003, L004, L005, L006;
+	L001.setString("試行終了/", font_size);
+	L002.setString("試行", font_size);
+
+	L003.setString("ブロック終了/", font_size);
+	L004.setString("ブロック", font_size);
+
+	L005.setString("１回目刺激（順応）", font_size);
+	L006.setString("２回目刺激（テスト）", font_size);
+
+	// Offline Movie calculation using Image array around here
+	double trial_angle[256];
+	double trial_length[256];
+	int trial_number[256];
+	double trial_time[256];
+
+	///- 2 Initialization //////////////////////////////////////////////////////////
+
+
+	///+ 3 Drawing /////////////////////////////////////////////////////////////////
+	//// 3 Drawing
+
+	///training
+
+	Psychlops::Color textcol = Color::gray;
+	Psychlops::Color adaptcolor[2];
+	adaptcolor[0].set(127.0 / 255.0*0.5, 127.0 / 255.0*0.5, 127.0 / 255.0*0.5);
+	adaptcolor[1].set(127.0 / 255.0*1.5, 127.0 / 255.0*1.5, 127.0 / 255.0*1.5);
+	Psychlops::Color testcolor(0, 0, 0);
+	Psychlops::Color testcolor2(127.0 / 255.0*2.0, 127.0 / 255.0*2.0, 127.0 / 255.0*2.0);
+	double ll = stimH * 0.5;　// Length of slantline
+	double lx, ly;
+	double angle = PI / 2;
+	int frame;
+	int trialnum = 0;
+	int trialkey;
+	Psychlops::Letters Ex001, Ex002, Ex003, Ex004;
+	int breakflag = -1;
+
+	double eccey = stimH * 0.25;
+	//TRAININGS---------------------------------------------------
+	double polarity = 1;
+	while (breakflag < 0) {
+		cnvs.clear(DEFAULT_BG_COLOR);
+		//adaptation
+		frame = 0;
+		angle = -PI / 16;
+		if (angle != PI / 2)gap = stimW * (1 + gapbase / cos(angle));
+		else gap = 0;
+		topup_before.update();
+		while (frame++ < 1.0 * CANVAS_REFRESHRATE) {
+			cnvs.clear(DEFAULT_BG_COLOR);
+			L01.centering(cnvsW*0.5, cnvsH*0.5 - 180).draw(Color::black);
+			L02.centering(cnvsW*0.5, cnvsH*0.5 - 150).draw(Color::black);
+			L04.centering(cnvsW*0.5, cnvsH*0.5 - 120).draw(Color::black);
+			for (int i = 0; i < rows; i++) {
+				for (int j = 0; j < cols; j++) {
+					for (double l = 0; l < ll; l++) {
+						lx = -l * cos(PI / 2 + angle);
+						ly = -l * sin(PI / 2 + angle);
+						slantorg.centering().shift(lx + gap * (i - (rows - 1) / 2), eccey + ly + gap * (j - (cols - 1) / 2));
+						slantorg.draw(adaptcolor[polarity]);
+						//lx= l*cos(PI/2-angle);
+						//ly= l*sin(PI/2-angle);
+						//slantorg.centering().shift(lx+gap*(i-(rows-1)/2),eccey+ly+gap*(j-(cols-1)/2));
+						//slantorg.draw(adaptcolor);
+					}
+				}
+			}
+			startbutton.draw();
+			if(prec_error_temporal) { L_ERROR.draw(); }
+			cnvs.flip();
+			if (startbutton.pushed())breakflag = 1;
+		}
+		topup_after.update();
+		topup_time_msec = topup_after.at_msec() - topup_before.at_msec();
+		prec_error_temporal = (topup_time_msec < 1000*0.8 || topup_time_msec > 1000*1.2 ) ? true : false;
+
+		//gap
+		frame = 0;
+		while (breakflag < 0 && frame < gapperiod*CANVAS_REFRESHRATE) {
+			cnvs.clear(DEFAULT_BG_COLOR);
+			L01.centering(cnvsW*0.5, cnvsH*0.5 - 180).draw(Color::white);
+			L02.centering(cnvsW*0.5, cnvsH*0.5 - 150).draw(Color::white);
+			L04.centering(cnvsW*0.5, cnvsH*0.5 - 120).draw(Color::white);
+			startbutton.draw();
+			if(prec_error_temporal) { L_ERROR.draw(); }
+			cnvs.flip();
+			frame++;
+			if (startbutton.pushed())breakflag = 1;
+		}
+
+		/*Test*/
+		itemp = random(testcondnum);
+		angle = testangle[itemp];
+		if (angle != PI / 2)gap = stimW * (1 + gapbase / cos(angle));
+		else gap = 0;
+		frame = 0;
+		while (breakflag < 0 && frame++ < CANVAS_REFRESHRATE) {
+			cnvs.clear(DEFAULT_BG_COLOR);
+			L01.centering(cnvsW*0.5, cnvsH*0.5 - 180).draw(Color::white);
+			L02.centering(cnvsW*0.5, cnvsH*0.5 - 150).draw(Color::white);
+			L04.centering(cnvsW*0.5, cnvsH*0.5 - 120).draw(Color::white);
+			for (int i = 0; i < rows; i++) {
+				for (int j = 0; j < cols; j++) {
+					for (double l = 0; l < ll; l++) {
+						lx = -l * cos(PI / 2 + angle);
+						ly = -l * sin(PI / 2 + angle);
+						slantorg.centering().shift(lx + gap * (i - (rows - 1) / 2), eccey + ly + gap * (j - (cols - 1) / 2));
+						slantorg.draw(testcolor);
+						//lx= -l*cos(PI/2+angle);
+						//ly= -l*sin(PI/2+angle);
+						//slantorg.centering().shift(lx+gap*(-1+i-(rows-1)/2),eccey+ly+gap*(j-(cols-1)/2));
+						//slantorg.draw(testcolor2);
+					}
+				}
+			}
+			startbutton.draw();
+			if(prec_error_temporal) { L_ERROR.draw(); }
+			cnvs.flip();
+			if (startbutton.pushed())breakflag = 1;
+		}
+
+		//Answer
+		frame = 0;
+		while (breakflag < 0 && !rightbutton.pushed() && !leftbutton.pushed()) {
+			cnvs.clear(DEFAULT_BG_COLOR);
+
+			L01.centering(cnvsW*0.5, cnvsH*0.5 - 180).draw(Color::white);
+			L02.centering(cnvsW*0.5, cnvsH*0.5 - 150).draw(Color::white);
+			L04.centering(cnvsW*0.5, cnvsH*0.5 - 120).draw(Color::white);
+			rightbutton.centering(cnvsW*0.5 + 120, cnvsH*0.5 + 120).draw();
+			leftbutton.centering(cnvsW*0.5 - 120, cnvsH*0.5 + 120).draw();
+			startbutton.draw();
+			if(prec_error_temporal) { L_ERROR.draw(); }
+			cnvs.flip();
+			frame++;
+			if (startbutton.pushed())breakflag = 1;
+			//if(rightbutton.pushed()){if(testangle[itemp]<=0)cnvs.clear(Color::red);startbutton.draw();cnvs.flip();break;}
+			//if(leftbutton.pushed()){if(testangle[itemp]<=0)cnvs.clear(Color::white);startbutton.draw();cnvs.flip();break;}
+		}
+	}//trial loop
+
+	//MAIN TRIALS--------------------------------------------------------
+	int itemp;
+	int testcond;
+	int adapt_session[sessionnumber];
+	int itemp2 = 0;
+	double dtemp;
+	int session_now;
+	int response[sessionnumber][totaltrialnum];
+	int rt[sessionnumber][totaltrialnum];
+	int testvalue[sessionnumber][totaltrialnum];
+	int adaptvalue[sessionnumber][totaltrialnum];
+	
+	for (int session = 0; session < sessionnumber_now; session++) {//sessionloop
+		session_now = sessionseed[session];
+		trialnum = 0;
+
+		//initialize trial order
+		for (int i = 1; i < totaltrialnum; i++) {
+			a = Psychlops.random(i + 1);
+			tmp = trialseed[i];
+			trialseed[i] = trialseed[a];
+			trialseed[a] = tmp;
+		}
+
+		//TOPUP ADAPTATION---------------------------------------------------
+		frame = 0;
+		polarity = 1;
+		angle = adaptangle[session_now];
+		if (angle != PI / 2)gap = stimW * (1 + gapbase / cos(angle));
+		else gap = 0;
+		topup_before.update();
+		while (frame++ < topupadaptation * CANVAS_REFRESHRATE) {
+			if (frame % 60 == 0)polarity = 1 - polarity;
+			cnvs.clear(DEFAULT_BG_COLOR);
+			for (int i = 0; i < rows; i++) {
+				for (int j = 0; j < cols; j++) {
+
+					for (double l = 0; l < ll; l++) {
+						lx = -l * cos(PI / 2 + angle);
+						ly = -l * sin(PI / 2 + angle);
+						slantorg.centering().shift(lx + gap * (i - (rows - 1) / 2), eccey + ly + gap * (j - (cols - 1) / 2));
+						slantorg.draw(adaptcolor[polarity]);
+						//lx= l*cos(PI/2-angle);
+						//ly= l*sin(PI/2-angle);
+						//slantorg.centering().shift(lx+gap*(i-(rows-1)/2),eccey+ly+gap*(j-(cols-1)/2));
+						//slantorg.draw(adaptcolor);
+					}
+				}
+			}
+			if(prec_error_temporal) { L_ERROR.draw(); }
+			cnvs.flip();
+		}
+		topup_after.update();
+		topup_time_msec = topup_after.at_msec() - topup_before.at_msec();
+		prec_error_temporal = (topup_time_msec < topupadaptation*1000*0.9 || topup_time_msec > topupadaptation*1000*1.1 ) ? true : false;
+		//TOPUP ADAPTATION---------------------------------------------------
+
+		while (trialnum < totaltrialnum) {//trial loop
+			trialkey = trialseed[trialnum];
+			trial_number[trialnum] = trialnum;
+			testcond = trialkey % testcondnum;
+
+			//adaptation
+			frame = 0;
+			angle = adaptangle[session_now];
+			if (angle != PI / 2)gap = stimW * (1 + gapbase / cos(angle));
+			else gap = 0;
+			topup_before.update();
+			while (frame++ < adaptation * CANVAS_REFRESHRATE) {
+				cnvs.clear(DEFAULT_BG_COLOR);
+				for (int i = 0; i < rows; i++) {
+					for (int j = 0; j < cols; j++) {
+
+						for (double l = 0; l < ll; l++) {
+							lx = -l * cos(PI / 2 + angle);
+							ly = -l * sin(PI / 2 + angle);
+							slantorg.centering().shift(lx + gap * (i - (rows - 1) / 2), eccey + ly + gap * (j - (cols - 1) / 2));
+							slantorg.draw(adaptcolor[polarity]);
+							//	lx= l*cos(PI/2-angle);
+							//	ly= l*sin(PI/2-angle);
+							//	slantorg.centering().shift(lx+gap*(i-(rows-1)/2),eccey+ly+gap*(j-(cols-1)/2));
+							//	slantorg.draw(adaptcolor);
+						}
+						//elementbar.centering().shift(gap*(i-(rows-1)/2),gap*(j-(cols-1)/2) );
+						//elementbar.draw(Color::red);
+					}
+				}
+
+				if(prec_error_temporal) { L_ERROR.draw(); }
+				cnvs.flip();
+				if (frame % 60 == 0)polarity = 1 - polarity;
+			}
+			topup_after.update();
+			topup_time_msec = topup_after.at_msec() - topup_before.at_msec();
+			prec_error_temporal = (topup_time_msec < adaptation*1000*0.8 || topup_time_msec > adaptation*1000*1.2 ) ? true : false;
+
+
+			///gap
+			frame = 0;
+			while (frame < gapperiod*CANVAS_REFRESHRATE) {
+				cnvs.clear(DEFAULT_BG_COLOR);
+				if(prec_error_temporal) { L_ERROR.draw(); }
+				cnvs.flip();
+				frame++;
+			}
+
+			/*Test*/
+			angle = testangle[testcond];
+			if (angle != PI / 2)gap = stimW * (1 + gapbase / cos(angle));
+			else gap = 0;
+			frame = 0;
+			while (frame++ < test*CANVAS_REFRESHRATE) {
+				cnvs.clear(DEFAULT_BG_COLOR);
+				for (int i = 0; i < rows; i++) {
+					for (int j = 0; j < cols; j++) {
+						for (double l = 0; l < ll; l++) {
+							lx = -l * cos(PI / 2 + angle);
+							ly = -l * sin(PI / 2 + angle);
+							slantorg.centering().shift(lx + gap * (i - (rows - 1) / 2), eccey + ly + gap * (j - (cols - 1) / 2));
+							slantorg.draw(testcolor);
+							//lx= l*cos(PI/2-angle);
+							//ly= l*sin(PI/2-angle);
+							//slantorg.centering().shift(lx-gap+gap*(i-(rows-1)/2),eccey+ly+gap*(j-(cols-1)/2));
+							//slantorg.draw(testcolor);
+						}
+					}
+				}
+				if(prec_error_temporal) { L_ERROR.draw(); }
+				cnvs.flip();
+			}
+
+			//Answer
+			frame = 0;
+			itemp2 = ansflag[testcond];
+			ansflag[testcond] = ansflag[testcond] + 1;
+			answer[testcond][itemp2][0] = testangle[testcond];
+			testvalue[session_now][trialnum] = Math::round(testangle[testcond]/2/PI * 3600)/10;      // 結果記録時に有効数字を揃える
+			adaptvalue[session_now][trialnum] = Math::round(adaptangle[session_now]/2/PI * 3600)/10; // 結果記録時に有効数字を揃える
+			while (!rightbutton.pushed() && !leftbutton.pushed()) {
+				cnvs.clear(DEFAULT_BG_COLOR);
+				//Show trial number
+				cnvs.var(trialnum, 40, 70);
+				L001.centering(110, 50).draw(Color::white);
+				cnvs.var(totaltrialnum, 170, 70);
+				L002.centering(230, 50).draw(Color::white);
+				L03.centering().draw(Color::gray);
+				rightbutton.centering(cnvsW*0.5 + 120, cnvsH*0.5 + 120).draw();
+				leftbutton.centering(cnvsW*0.5 - 120, cnvsH*0.5 + 120).draw();
+				if(prec_error_temporal) { L_ERROR.draw(); }
+				cnvs.flip();
+				frame++;
+				if (rightbutton.pushed()) {
+					answer[testcond][itemp2][1] = 1;
+					response[session_now][trialnum] = 1;
+					answer[testcond][itemp2][2] = frame;
+					rt[session_now][trialnum] = frame;
+					break;
+				}
+				if (leftbutton.pushed()) {
+					answer[testcond][itemp2][1] = -1;
+					response[session_now][trialnum] = -1;
+					answer[testcond][itemp2][2] = frame;
+					rt[session_now][trialnum] = frame;
+					break;
+				}
+			}
+
+			trialnum++;
+		}//trial loop
+
+		//summarize session data
+		for (int i = 0; i < testcondnum; i++) { average[session_now][i] = 0; }
+		for (int i = 0; i < testcondnum; i++) {
+			for (int j = 0; j < repetition; j++) {
+				average[session_now][i] = average[session_now][i] + answer[i][j][1];
+			}
+			average[session_now][i] = (average[session_now][i] + repetition) / (repetition*2.0);
+		}
+		for (int i = 0; i < testcondnum; i++) { ansflag[i] = 0; }
+
+		if (sessionnumber_now > 1) {
+			while (session < sessionnumber - 1 && !sessionbutton.pushed()) {
+				cnvs.clear(DEFAULT_BG_COLOR);
+				cnvs.var(session + 1, 40, 300);
+				L003.centering(110, 280).draw(Color::white);
+				cnvs.var(sessionnumber, 170, 300);
+				L004.centering(220, 280).draw(Color::white);
+				sessionbutton.draw();
+				cnvs.flip();
+			}
+		}
+	}//session loop
+
+
+	double test_cond = Math.round(10 * adaptangle[sessionseed[0]] / PI * 180) / 10;
+	auto header_str = "";
+	float testangles[testcondnum];
+	for (int i = 0; i < testcondnum; i++) {
+		testangles[i] = Math.round(10 * testangle[i] / PI * 180) / 10, 100 + i * 50;
+	}
+	sprintf(header_str, "Angle, test %f deg", test_cond);
+	Psychlops.File.saveToLocalFile = false;
+	Data::savearray("TAE_average_" + test_cond + "_%TIME_.csv", header_str,
+		testcondnum, testangles, average[session_now]);
+	Psychlops.File.saveToIndexDB = true;
+	Psychlops.File.saveToLocalFile = true;
+
+	//Results display
+	while (!(endbutton.pushed() || sessionendbutton.pushed())) {
+		cnvs.clear(Color::white);
+		if (sessionnumber_now > 1) {
+			endbutton.centering(cnvsW*0.5, cnvsH*0.5 + 250).draw();
+		}
+		else {
+			sessionendbutton.centering(cnvsW*0.5, cnvsH*0.5 + 250).draw();
+		}
+
+		//for (int j = 0; j < sessionnumber; j++) {
+		//	cnvs.var(Math.round(10 * adaptangle[j] / PI * 180) / 10, 50, 180 + j * 30, Color::red);
+		//}
+
+		//for (int i = 0; i < testcondnum; i++) {
+		//	for (int j = 0; j < sessionnumber; j++) {
+		//		cnvs.var(average[j][i], 100 + i * 50, 180 + j * 30, Color::blue);
+		//	}
+		//	cnvs.var(Math.round(10 * testangle[i] / PI * 180) / 10, 100 + i * 50, 130, Color::black);
+		//}
+
+		downloadbutton.centering().draw();
+		if (downloadbutton.pushed()) {
+			Psychlops.File.saveToLocalFile = true;
+			Psychlops.File.saveToIndexDB = false;
+			//Data::savearray("TAE_average_" + test_cond + "_%TIME_.csv", header_str,
+			//	testcondnum, testangles, average[session_now]);
+			Data::savearray("TAE_raw_" + test_cond + "_%TIME_.csv", "順応方位（度）, テスト方位（度）, 反応",
+				totaltrialnum, adaptvalue[session_now], testvalue[session_now], response[session_now]);
+			Psychlops.File.saveToLocalFile = false;
+			Psychlops.File.saveToIndexDB = true;
+		}
+
+		if(prec_error_temporal) { L_ERROR.draw(); }
+		cnvs.flip();
+		CANVAS_FRAMENUM++;
+	}
+
+	///- 3 Drawing /////////////////////////////////////////////////////////////////
+
+
+}
+
+			</textarea>
+			<button type="button" id="run_button" class="btn btn-primary" data-toggle="modal" data-target="#modal_stimuli">▶はじめる</button>
+		</div>
+	</div>
+
+	<div id="fullscreen_canvas_container" style="display:none">
+	</div>
+
+	<div style="text-align:center; margin: auto;">
+		<div id="psychlops_powersymbol" style="display: none; width:100%; text-align:center; position:absolute; top:200px; color:blue; font-size:xx-large"><span class="glyphicon glyphicon-off"></span></div>
+		<div id="psychlops_throbber" style="position:absolute; top:200px; width:100%; text-align:center; margin: auto; display:none;">もうすぐ始まります...<br /><img src="./import/images/throbber.gif" /></div>
+		<div id="window_canvas_container" style="text-align:center; margin: auto;">
+			<canvas id="glcanvas" width="1" height="1" tabindex="0">
+				We are sorry, but your browser does not seem to support WebGL.
+			</canvas>
+		</div>
+
+		<div style="text-align:center; margin:1em">
+			<textarea id="psychlops_console" rows="5" style="display:none;width:95%;font: normal 8pt courier;"></textarea>
+		</div>
+	</div>
+
+	<div class="modal" id="modal_data" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="modal-label">結果</h4>
+				</div>
+
+				<div class="modal-body">
+					<textarea style="width:100%; height:10em;" id="savearray"></textarea>
+					<div id="plot_console"></div>
+					<div id="plot_area" style="width:400px; height:400px;"></div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" onclick="Psychlops.Data.invokeSavearray('results.txt')">保存(chromeのみ)</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>
