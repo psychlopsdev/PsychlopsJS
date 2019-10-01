@@ -46,8 +46,10 @@
 				Psychlops.Util.run(func);
 			}
 		}
-		function loadCpp(file, immidiate_run) {
+		function loadCpp(file, immidiate_run, retry) {
 			var filename = file;
+			var retry_last = 5;
+			if (typeof (retry) == Number) { retry_last = retry; }
 			if (file.indexOf("*") >= 0) {
 				var tmp = file.split("*");
 				filename = tmp.shift();
@@ -66,7 +68,9 @@
 				}
 
 			}).fail(function (data) {
-				alert('Failed to load ' + filename + '.');
+				alert('再読み込みしてください ' + filename + '.' + retry);
+				Psychlops.Util.programFinishedCallback();
+				//if(retry_last>0) { loadCpp(file, immidiate_run, retry-1); }
 			});
 		}
 		$(function () {
@@ -229,9 +233,6 @@
 			</div>
 		</div>
 	</div>
-
-<code id="cpp_code" >
-</code>
 
 
 </body>
