@@ -9,6 +9,10 @@ Samples with online editor
 
 Currently, all samples are written in C++ and depends on embeded converter. Pure JavaScript version is being prepared.
 
+- [Plain Web Editor](https://psychlopsdev.github.io/PsychlopsJS/psychlops.editor.html) `C++`
+
+### Samples
+
 - [Contrast Sensitivity (static)](https://psychlopsdev.github.io/PsychlopsJS/psychlops.editor.html#samples/ContrastSensitivity_space.cpp) `C++`
 - [Contrast Sensitivity (dynamic)](https://psychlopsdev.github.io/PsychlopsJS/psychlops.editor.html#samples/ContrastSensitivity_temp.cpp) `C++`
 - [Lilac Chaser](https://psychlopsdev.github.io/PsychlopsJS/psychlops.editor.html#samples/visiome/LilacChaser.cpp) `C++`
