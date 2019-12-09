@@ -29,6 +29,7 @@ Classes
 ### I/O
 
 - [Clock](Clock)
+- [Data](Data)
 - HID
 	- [Keyboard](Keyboard)
 	- [Mouse](Mouse)
