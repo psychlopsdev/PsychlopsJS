@@ -12,8 +12,8 @@ void psychlops_main() {
 	
 	img.set(60,60); 
 
-	for(int i=0; i < imageHsize; i++){
-		for(int j=0; j < imageVsize; j++){
+	for(int i=0; i < imageHsize; i++) {
+		for(int j=0; j < imageVsize; j++) {
 			R=random(1.0) * 0.5; 
 			G=random(1.0) * 0.5; 
 			B=random(1.0) * 0.5; 
@@ -22,7 +22,7 @@ void psychlops_main() {
 	}
 	img.cache();
 		
-	while(!Keyboard::esc.pushed()){
+	while(!Keyboard::esc.pushed()) {
 		window.clear(Color::black); 
 		img.centering(); 
 		img.shift(100,100); 

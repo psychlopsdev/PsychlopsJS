@@ -2,7 +2,7 @@
 using namespace Psychlops;
 
 
- 	void psychlops_main() {
+void psychlops_main() {
 		
 	int imageHsize = 100;  
     int imageVsize = 100;  
@@ -21,13 +21,13 @@ using namespace Psychlops;
 
  	centerrect.centering();
  	
-		for (int k=0; k<imagenumber; k++){
+	for (int k=0; k<imagenumber; k++){
         img[k].set(imageHsize, imageVsize); 
     }
 
- 	    for(int i=0; i < imageHsize; i++){
+ 	for(int i=0; i < imageHsize; i++){
         for(int j=0; j < imageVsize; j++){
- 	            _i = i-imageHsize*0.5; 
+ 	        _i = i-imageHsize*0.5; 
             _j = j-imageVsize*0.5; 
             sd = imageVsize/6; 
             env=exp(-(_i*_i+_j*_j)/(2.0*(sd*sd)) ); 
@@ -42,13 +42,11 @@ using namespace Psychlops;
         }
     }
 
- 	    for (int k=0; k<imagenumber; k++){
+ 	for (int k=0; k<imagenumber; k++) {
         img[k].cache(); 
         img[k].centering().shift(100,100);
     }
 
- 	   
-    
 	while(!Keyboard::esc.pushed()){
 		frame++;
 		if(frame % 3 == 0){ imageframe++;}
