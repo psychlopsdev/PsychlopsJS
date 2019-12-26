@@ -4,13 +4,12 @@ using namespace Psychlops;
 void psychlops_main() {
 	Canvas window(Canvas::window); 
 
-	Psychlops::Rectangle figure; 
+	Psychlops::Letters instruction("Press esc to end the program."); 
 
 	while(!Keyboard::esc.pushed()) {  
-		figure.set( 100, 100 ); 
-		figure.centering();   
-		figure.shift( 10, 10 ); 
-		figure.draw( Color( 1, 0, 0) ); 
+		window.clear();
+		instruction.centering();
+		instruction.draw( Color::white ); 
 		window.flip(); 
 	} 
 
