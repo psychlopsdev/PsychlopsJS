@@ -350,6 +350,8 @@ Psychlops.Util.initialize = function (str) {
 	Psychlops.AppInfo.loadLocalSettings();
 	if (!(typeof Psychlops.AppInfo.localSettings.TrueFullScreen == "undefined")) {
 		Psychlops.Util.trueFullscreen = Psychlops.AppInfo.localSettings.TrueFullScreen == "true" ? true : false;
+	} else {
+		Psychlops.Util.trueFullscreen = true;
 	}
 	Psychlops.Util.initFullScreen();
 	Psychlops.Input._INITIALIZE_();
