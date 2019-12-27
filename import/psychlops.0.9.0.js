@@ -3083,6 +3083,32 @@ Psychlops.Image.prototype = {
 		canvas = null; ctx = null; input = null;
 		return false;
 	}
+	, from: function (cnvs, souce_area) {
+		let w = Math.floor(souce_area.getWidth());
+		let h = Math.floor(souce_area.getHeight());
+		let left   = Math.round(souce_area.getLeft());
+		let top    = Math.round(souce_area.getTop());
+		var gl = cnvs.gl;
+		var i, r, g, b, a;
+		this.set(w, h);
+		gl.readPixels(left, top, w, h, gl.RGBA, gl.UNSIGNED_BYTE, this.storage.data);
+	}
+	, save: function (filename) {
+		//this.storage.data
+		//let imgelem = document.createElement("img");
+		let cnvs2d = document.createElement("canvas");
+		cnvs2d.width  = this.getWidth();
+		cnvs2d.height = this.getHeight();
+		if (cnvs2d.msToBlob) {
+			var blob = cnvs2d.msToBlob();
+			window.navigator.msSaveBlob(blob, filename);
+		} else {
+			let btn = document.createElement("button");
+			btn.href = canvas.toDataURL('image/png');
+			btn.download = filename;
+			btn.click();
+		}
+	}
 
 	, getWidth: function () { return this.width; }
 	, getHeight: function () { return this.height; }
@@ -4067,7 +4093,13 @@ Psychlops.File.saveTextByBlob = function (text, filename) {
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
 		var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
 		var blob = new Blob([bom, text], { type: "text/plain" });
-
+		Psychlops.File.saveFileByBlob(blob, filename);
+	} else {
+		alert('The File APIs are not fully supported in this browser.');
+	}
+}
+Psychlops.File.saveFileByBlob = function (blob, filename) {
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
 		if (window.navigator.msSaveBlob) {
 			window.navigator.msSaveBlob(blob, filename); // IE/Edge
 		} else {

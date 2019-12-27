@@ -23,11 +23,16 @@ Functions
 
 #### By decralation
 
+#### By function
+
 `Image& set(int width, int height)`
 : set a Image instance with designated size.
 
 `Image& load(string file_name)`
 : load a Image file. PNG and JPEG are supported.
+
+`Image& from(Canvas source, Rectangle source_area)`
+: load a Image file. PNG and JPEG are supported. CURRENT LIMITATIONS: (1) area size must be 2^n where n as integer. (2) gamma values must be set to 1.
 
 ### Translation
 
