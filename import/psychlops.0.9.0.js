@@ -2901,19 +2901,23 @@ Psychlops.Image.prototype = {
 			return false;
 		}
 	}
-	, makeTextureStorage: function (w, h) {
-		var tex_width = 0, tex_height = 0;
+	, _ceilTextureSize: function (w, h) {
 		var i;
 		i = 0;
 		while (Math.pow(2.0, ++i) < w) { }
-		tex_width = Math.pow(2.0, i);
+		var tex_width = Math.pow(2.0, i);
 		i = 0;
 		while (Math.pow(2.0, ++i) < h) { }
-		tex_height = Math.pow(2.0, i);
+		var tex_height = Math.pow(2.0, i);
 		if (!(tex_width == tex_height)) {
 			if (tex_width > tex_height) { tex_height = tex_width; }
 			if (tex_width < tex_height) { tex_width = tex_height; }
 		}
+		return [tex_width, tex_height];
+	}
+	, makeTextureStorage: function (w, h) {
+		var tex_width, tex_height;
+		[tex_width, tex_height] = this._ceilTextureSize(w, h);
 		var val = null;
 		if (this.storage != null && tex_width == this.storage.width && tex_height == this.storage.height) {
 			this.uncache();
@@ -3090,15 +3094,42 @@ Psychlops.Image.prototype = {
 		let top    = Math.round(souce_area.getTop());
 		var gl = cnvs.gl;
 		var i, r, g, b, a;
+		let buf = new Uint8Array(w*h*4);
+		gl.readPixels(left, top, w, h, gl.RGBA, gl.UNSIGNED_BYTE, buf);
+		//gl.readPixels(left, top, w, h, gl.RGBA, gl.UNSIGNED_BYTE, this.storage.data);
 		this.set(w, h);
-		gl.readPixels(left, top, w, h, gl.RGBA, gl.UNSIGNED_BYTE, this.storage.data);
+		for (let y = 0; y < h; y += 1) {
+			for (let x = 0; x < w; x += 1) {
+				let i = ((h-y-1) * w + x) * 4;
+				let p = (x + y * this.storage.height) * 4;
+				this.storage.data[p] = buf[i];
+				this.storage.data[p+1] = buf[i+1];
+				this.storage.data[p+2] = buf[i+2];
+				this.storage.data[p+3] = buf[i+3];
+			}
+		}
 	}
 	, save: function (filename) {
 		//this.storage.data
 		//let imgelem = document.createElement("img");
+		let w = this.getWidth();
+		let h = this.getHeight();
 		let cnvs2d = document.createElement("canvas");
-		cnvs2d.width  = this.getWidth();
-		cnvs2d.height = this.getHeight();
+		cnvs2d.width  = w;
+		cnvs2d.height = h;
+		let ctx = cnvs2d.getContext('2d');
+		let img3 = ctx.createImageData(w, h);
+		for (let y = 0; y < h; y += 1) {
+			for (let x = 0; x < w; x += 1) {
+				let i = (y * w + x) * 4;
+				let p = (x + y * this.storage.height) * 4;
+				img3.data[i] = this.storage.data[p];
+				img3.data[i+1] = this.storage.data[p+1];
+				img3.data[i+2] = this.storage.data[p+2];
+				img3.data[i+3] = this.storage.data[p+3];
+			}
+		}
+		ctx.putImageData(img3, 0, 0);
 		if (cnvs2d.msToBlob) {
 			var blob = cnvs2d.msToBlob();
 			window.navigator.msSaveBlob(blob, filename);

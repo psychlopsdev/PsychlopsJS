@@ -329,31 +329,25 @@ jscode = jscode.replace(/\s+int\s+/g, "var ");
 		jscode = jscode.replace(regimgload, "while($1){yield;}");
 	}
 	
+	/*
 	var imgload = [];
-	regimgload = new RegExp('\\(\\s*\\"(.+\\.jpg)\\"\\s*\\)', "g");
-	while ((imgload = regimgload.exec(jscode)) != null) {
-		if (imgload != null && imgload.length > 0) {
-			for (var i = 0; i < imgload.length; i += 1) {
-				if (imgload[i].indexOf("\"") < 0) {
-					if (typeof Psychlops.Image._STORE_[imgload[i]] == "undefined") {
-						Psychlops.Image._LOADED_ARRAY_.push(imgload[i]);
+	imgloadext = ["jpg", "png"];
+	for(let i=0; i<imgloadext.length; i++) {
+		regimgload = new RegExp('\\(\\s*\\"(.+\\." + imgloadext[i] + ")\\"\\s*\\)', "g");
+		while ((imgload = regimgload.exec(jscode)) != null) {
+			if (imgload != null && imgload.length > 0) {
+				for (var i = 0; i < imgload.length; i += 1) {
+					if (imgload[i].indexOf("\"") < 0) {
+						if (typeof Psychlops.Image._STORE_[imgload[i]] == "undefined") {
+							Psychlops.Image._LOADED_ARRAY_.push(imgload[i]);
+						}
 					}
 				}
 			}
 		}
 	}
-	regimgload = new RegExp('\\(\\s*\\"(.+\\.png)\\"\\s*\\)', "g");
-	while ((imgload = regimgload.exec(jscode)) != null) {
-		if (imgload != null && imgload.length > 0) {
-			for (var i = 0; i < imgload.length; i += 1) {
-				if (imgload[i].indexOf("\"") < 0) {
-					if (typeof Psychlops.Image._STORE_[imgload[i]] == "undefined") {
-						Psychlops.Image._LOADED_ARRAY_.push(imgload[i]);
-					}
-				}
-			}
-		}
-	}
+	*/
+
 
 
 	var reg_sprintf = new RegExp('\\s+sprintf\\s*\\(\\s*([^,]+)\\s*,(.+)\\)\\s*;', "g");
