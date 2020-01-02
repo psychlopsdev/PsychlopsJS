@@ -4312,15 +4312,15 @@ Psychlops.Data.savearray = function (filename, header, length, arr0, arr1, arr2,
 			if (cols > 4) { row.push(arr4[i]); }
 			if (cols > 5) { row.push(arr5[i]); }
 			if (cols > 6) { row.push(arr6[i]); }
-			if (cols > 7) { arr.push(arr7[i]); }
-			if (cols > 8) { arr.push(arr8[i]); }
-			if (cols > 9) { arr.push(arr9[i]); }
-			if (cols > 10) { arr.push(arr10[i]); }
-			if (cols > 11) { arr.push(arr11[i]); }
-			if (cols > 12) { arr.push(arr12[i]); }
-			if (cols > 13) { arr.push(arr13[i]); }
-			if (cols > 14) { arr.push(arr14[i]); }
-			if (cols > 15) { arr.push(arr15[i]); }
+			if (cols > 7) { row.push(arr7[i]); }
+			if (cols > 8) { row.push(arr8[i]); }
+			if (cols > 9) { row.push(arr9[i]); }
+			if (cols > 10) { row.push(arr10[i]); }
+			if (cols > 11) { row.push(arr11[i]); }
+			if (cols > 12) { row.push(arr12[i]); }
+			if (cols > 13) { row.push(arr13[i]); }
+			if (cols > 14) { row.push(arr14[i]); }
+			if (cols > 15) { row.push(arr15[i]); }
 		}
 		Psychlops.Data.savearrayTable.push(row);
 	}

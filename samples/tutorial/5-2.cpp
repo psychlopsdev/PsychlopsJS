@@ -26,7 +26,7 @@ void psychlops_main() {
 	img.cache(); 
     
     Widgets::Button downloadButton;
-    downloadButton.set("Save the image.");
+    downloadButton.set("Push this button to save the image.");
     downloadButton.shift(10,10);
 
 	while(!Keyboard::esc.pushed()){
