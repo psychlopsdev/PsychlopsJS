@@ -1372,7 +1372,7 @@ Psychlops.Canvas = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 					this.initialize(elem_id);
 				}
 				else if (a1 == Psychlops.Canvas.fullscreen) {
-					if (Psychlops.Util.trueFullscreen) {
+					if (Psychlops.Util.trueFullscreen && !(Psychlops.Util.isiOS || Psychlops.Util.isAndroid)) {
 						this.width = Psychlops.Display.primary.width;
 						this.height = Psychlops.Display.primary.height;
 					} else {
