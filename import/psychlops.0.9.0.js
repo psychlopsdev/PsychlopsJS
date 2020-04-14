@@ -319,7 +319,8 @@ Psychlops.Util.environment = (function () {
 Psychlops.Util._refreshRate = 60.0;
 Psychlops.Util.hasTouchEvent = ((typeof window.ontouchstart) !== 'undefined') ? true : false;
 Psychlops.Util.isUIExclusive = Psychlops.Util.environment.OS.name == "iOS" || Psychlops.Util.environment.host.name == "safari";
-Psychlops.Util.isiOS = /iPad|iPhone|iPod/.test(navigator.platform);
+//Psychlops.Util.isiOS = /iPad|iPhone|iPod/.test(navigator.platform);
+Psychlops.Util.isiOS = /ipad|iphone|ipod/.test(window.navigator.userAgent.toLowerCase());
 Psychlops.Util.isAndroid = /Android/.test(navigator.platform);
 Psychlops.Util.programPaused = false;
 Psychlops.Util.programFinished = false;
@@ -1360,11 +1361,13 @@ Psychlops.Canvas = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 	this.mvMatrix = null;
 	this.vertexPositionAttribute = null;
 	this.perspectiveMatrix = null;
+	
 
 	this.set = function (a1, a2, a3, a4) {
 		var elem_id = Psychlops.Util.canvas_element_id;
 		this.width = 800 * window.devicePixelRatio;
 		this.height = 600 * window.devicePixelRatio;
+		
 		switch (arguments.length) {
 			case 1:
 				if (a1 == Psychlops.Canvas.window) {
@@ -2316,7 +2319,7 @@ Psychlops.Canvas.Geometry = function (dist_cm_, horiz_cm_, vert_cm_, cnvs) {
 	} else if ((typeof arguments[0] == "number") && (typeof arguments[1] == "number")) {
 		this.setPhysicalByDiagonalInch(dist_cm_, horiz_cm_);
 	} else {
-		alert("Geometry should be specified.");
+		//alert("Geometry should be specified.");
 	}
 
 	this.horiz_pix_per_cm = this.horiz_pix / this.horiz_cm;
@@ -2354,6 +2357,11 @@ Psychlops.Canvas.Geometry.prototype = {
 		var diag_cm = diag_inch * 2.54;
 		var diag_pix = Math.sqrt((this.horiz_pix * this.horiz_pix) + (this.vert_pix * this.vert_pix));
 		this.pix_per_cm = diag_pix / diag_cm;
+		this.setPhysical(dist_cm_, this.horiz_pix / this.pix_per_cm, this.vert_pix / this.pix_per_cm);
+	}
+	, setPixelPerInch: function (dist_cm_, ppi) {
+		this.setLogical();
+		this.pix_per_cm = ppi / 2.54;
 		this.setPhysical(dist_cm_, this.horiz_pix / this.pix_per_cm, this.vert_pix / this.pix_per_cm);
 	}
 	, calc: function (arg, unit, toUnit) {
@@ -4206,26 +4214,10 @@ Psychlops.Data.savearrayCallback = null;
 Psychlops.Data.savearrayData = null;
 Psychlops.Data.savearrayTable = null;
 Psychlops.Data.savearrayText = null;
-Psychlops.Data.formatText = function (header, length, arr0, arr1, arr2, arr3, arr4, arr5, arr6, arr7, arr8, arr9, arr10, arr11, arr12, arr13, arr14, arr15) {
-	var cols = arguments.length - 2;
+Psychlops.Data.formatText = function (header, length, ...arr) {
+	var cols = arr.length;
 	if (cols < 1) { alert("Data::formatText : number of arguments was not enough. (filename, header, length, arr0, arr1,...)"); }
-	var arr = [];
-	if (cols > 0) { arr.push(arr0); }
-	if (cols > 1) { arr.push(arr1); }
-	if (cols > 2) { arr.push(arr2); }
-	if (cols > 3) { arr.push(arr3); }
-	if (cols > 4) { arr.push(arr4); }
-	if (cols > 5) { arr.push(arr5); }
-	if (cols > 6) { arr.push(arr6); }
-	if (cols > 7) { arr.push(arr7); }
-	if (cols > 8) { arr.push(arr8); }
-	if (cols > 9) { arr.push(arr9); }
-	if (cols > 10) { arr.push(arr10); }
-	if (cols > 11) { arr.push(arr11); }
-	if (cols > 12) { arr.push(arr12); }
-	if (cols > 13) { arr.push(arr13); }
-	if (cols > 14) { arr.push(arr14); }
-	if (cols > 15) { arr.push(arr15); }
+	//var arr = [];
 
 	var text = "exp," + Psychlops.AppInfo.expname + "\r\nparticipant," + Psychlops.AppInfo.participant_name + "\r\n" + header + "\r\n";
 	for (var i = 0; i < length; i += 1) {
@@ -4236,26 +4228,10 @@ Psychlops.Data.formatText = function (header, length, arr0, arr1, arr2, arr3, ar
 	}
 	return text;
 }
-Psychlops.Data.savearray = function (filename, header, length, arr0, arr1, arr2, arr3, arr4, arr5, arr6, arr7, arr8, arr9, arr10, arr11, arr12, arr13, arr14, arr15) {
-	var cols = arguments.length - 2;
+Psychlops.Data.savearray = function (filename, header, length, ...arr) {
+	var cols = arr.length;
 	if (cols < 1) { alert("Data::formatText : number of arguments was not enough. (filename, header, length, arr0, arr1,...)"); }
-	var arr = [];
-	if (cols > 0) { arr.push(arr0); }
-	if (cols > 1) { arr.push(arr1); }
-	if (cols > 2) { arr.push(arr2); }
-	if (cols > 3) { arr.push(arr3); }
-	if (cols > 4) { arr.push(arr4); }
-	if (cols > 5) { arr.push(arr5); }
-	if (cols > 6) { arr.push(arr6); }
-	if (cols > 7) { arr.push(arr7); }
-	if (cols > 8) { arr.push(arr8); }
-	if (cols > 9) { arr.push(arr9); }
-	if (cols > 10) { arr.push(arr10); }
-	if (cols > 11) { arr.push(arr11); }
-	if (cols > 12) { arr.push(arr12); }
-	if (cols > 13) { arr.push(arr13); }
-	if (cols > 14) { arr.push(arr14); }
-	if (cols > 15) { arr.push(arr15); }
+	//var arr = [];
 
 	var text = "exp," + Psychlops.AppInfo.expname + "\r\nparticipant," + Psychlops.AppInfo.participant_name + "\r\n" + header + "\r\n";
 	for (var i = 0; i < length; i += 1) {
@@ -4266,26 +4242,10 @@ Psychlops.Data.savearray = function (filename, header, length, arr0, arr1, arr2,
 	}
 	return text;
 }
-Psychlops.Data.savearray = function (filename, header, length, arr0, arr1, arr2, arr3, arr4, arr5, arr6, arr7, arr8, arr9, arr10, arr11, arr12, arr13, arr14, arr15) {
-	var cols = arguments.length - 3;
+Psychlops.Data.savearray = function (filename, header, length, ...arr) {
+	var cols = arr.length;
 	if (cols < 1) { alert("Data::savearray : number of arguments was not enough. (filename, header, length, arr0, arr1,...)"); }
-	var arr = [];
-	if (cols > 0) { arr.push(arr0); }
-	if (cols > 1) { arr.push(arr1); }
-	if (cols > 2) { arr.push(arr2); }
-	if (cols > 3) { arr.push(arr3); }
-	if (cols > 4) { arr.push(arr4); }
-	if (cols > 5) { arr.push(arr5); }
-	if (cols > 6) { arr.push(arr6); }
-	if (cols > 7) { arr.push(arr7); }
-	if (cols > 8) { arr.push(arr8); }
-	if (cols > 9) { arr.push(arr9); }
-	if (cols > 10) { arr.push(arr10); }
-	if (cols > 11) { arr.push(arr11); }
-	if (cols > 12) { arr.push(arr12); }
-	if (cols > 13) { arr.push(arr13); }
-	if (cols > 14) { arr.push(arr14); }
-	if (cols > 15) { arr.push(arr15); }
+	//var arr = [];
 
 	var text = "exp," + Psychlops.AppInfo.expname + "\r\nparticipant," + Psychlops.AppInfo.participant_name + "\r\n" + header + "\r\n";
 	for (var i = 0; i < length; i += 1) {
@@ -4305,22 +4265,7 @@ Psychlops.Data.savearray = function (filename, header, length, arr0, arr1, arr2,
 	for (var i = 0; i < arr0.length; i++) {
 		var row = [];
 		for (var j = 0; j < cols; j++) {
-			if (cols > 0) { row.push(arr0[i]); }
-			if (cols > 1) { row.push(arr1[i]); }
-			if (cols > 2) { row.push(arr2[i]); }
-			if (cols > 3) { row.push(arr3[i]); }
-			if (cols > 4) { row.push(arr4[i]); }
-			if (cols > 5) { row.push(arr5[i]); }
-			if (cols > 6) { row.push(arr6[i]); }
-			if (cols > 7) { row.push(arr7[i]); }
-			if (cols > 8) { row.push(arr8[i]); }
-			if (cols > 9) { row.push(arr9[i]); }
-			if (cols > 10) { row.push(arr10[i]); }
-			if (cols > 11) { row.push(arr11[i]); }
-			if (cols > 12) { row.push(arr12[i]); }
-			if (cols > 13) { row.push(arr13[i]); }
-			if (cols > 14) { row.push(arr14[i]); }
-			if (cols > 15) { row.push(arr15[i]); }
+			row.push(arr[j][i]);
 		}
 		Psychlops.Data.savearrayTable.push(row);
 	}

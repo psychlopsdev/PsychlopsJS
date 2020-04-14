@@ -141,9 +141,11 @@
 
 			$(window).on("message", function (e) {
 				var data = e.originalEvent.data;
-				Psychlops.AppInfo.participant_name = data.participant;
-				Psychlops.AppInfo.participant_attr = data.participant_attr;
-				loadCpp(data.url, true);
+				if(typeof data == "object" && "url" in data && "participant" in data) {
+					Psychlops.AppInfo.participant_name = data.participant;
+					Psychlops.AppInfo.participant_attr = data.participant_attr;
+					loadCpp(data.url, true);
+				}
 			});
 
 		});
