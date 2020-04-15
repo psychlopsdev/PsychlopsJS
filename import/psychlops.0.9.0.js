@@ -1434,7 +1434,7 @@ Psychlops.Canvas = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 	this._trueFullScreen = function () {
 	};
 	this._pseudoFullScreen = function (element_id) {
-		initWebGL(element_id);
+		this.initWebGL(element_id);
 	};
 	this._resizeTimer = null;
 	this._revertHiDPI = function (v) {
