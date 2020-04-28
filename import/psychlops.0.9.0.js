@@ -382,6 +382,11 @@ Psychlops.Util.run = function (js_source, args) {
 			Psychlops.AppInfo.argc = arg.length;
 			Psychlops.AppInfo.argv = arg;
 			break;
+		default:
+			Psychlops.AppInfo.args = [];
+			Psychlops.AppInfo.argc = 0;
+			Psychlops.AppInfo.argv = [];
+			break;
 	}
 
 	Psychlops.AppInfo.tabletMode_ = false;
@@ -4262,7 +4267,7 @@ Psychlops.Data.savearray = function (filename, header, length, ...arr) {
 	if (cols <= 0) { alert("Data::savearray: inappropriate header"); }
 	Psychlops.Data.savearrayTable = [];
 	Psychlops.Data.savearrayTable.push(header_arr);
-	for (var i = 0; i < arr0.length; i++) {
+	for (var i = 0; i < arr[0].length; i++) {
 		var row = [];
 		for (var j = 0; j < cols; j++) {
 			row.push(arr[j][i]);
