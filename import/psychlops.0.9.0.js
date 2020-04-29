@@ -609,7 +609,6 @@ Psychlops.Util.initFullScreen = function () {
 	document.addEventListener("fullscreenchange", Psychlops.Util.handleFullScreen, false);
 };
 Psychlops.Util.toggleFullScreen = function (s) {
-	//alert(19)
 	var str = arguments.length == 1 ? s : Psychlops.Util.window_canvas_container_element_id;
 	var elem = document.getElementById(str);
 	//$("#modal_stimuli").modal('hide');
@@ -1504,11 +1503,14 @@ Psychlops.Canvas = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 			}
 			window_container.innerHTML = "";
 			fullscreen_container.innerHTML = "";
+			var container_elem = window_container;
 			if (this._fullscreen) {
 				fullscreen_container.appendChild(newelement);
 				Psychlops.Util.makeFullscreenCallback();
+				container_elem = fullscreen_container;
 			} else {
 				window_container.appendChild(div); // (newelement);
+				container_elem = window_container;
 			}
 			element = newelement;
 

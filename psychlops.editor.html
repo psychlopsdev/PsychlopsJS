@@ -80,8 +80,18 @@
 				$('#psychlops_watchlist_area').hide();
 			}
 			saveToAutosave(workingFile);
-			var func = Psychlops.CodeConverter.compile($("#tab_" + tabSettings[workingFile].fileid + "_cpp").val());
-			jsEditor.setValue(func);
+			var cpp_tab_id = "#tab_" + tabSettings[workingFile].fileid + "_cpp";
+			var js_tab_id = "#tab_" + tabSettings[workingFile].fileid + "_js";
+			var tab_id = "";
+			var func;
+			if ($(cpp_tab_id).parent().css('display') == 'block') {
+				tab_id = cpp_tab_id;
+				func = Psychlops.CodeConverter.compile($(tab_id).val());
+				jsEditor.setValue(func);
+			} else {
+				tab_id = js_tab_id;
+				func = jsEditor.getValue();
+			}
 			if (args == null) {
 				Psychlops.Util.run(func);
 			} else {
