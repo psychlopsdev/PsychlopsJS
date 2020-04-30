@@ -227,9 +227,9 @@
 				cppEditor.save();
 				var func = Psychlops.CodeConverter.compile($("#" + arg + "_cpp").val());
 				$("#" + arg + "_cpp").parent().hide();
-				jsEditor.setValue(func);
 				$("#" + arg + "_js").parent().show();
-				showJSprogramToggle = false;
+				jsEditor.setValue(func);
+				showJSprogramToggle = false
 			} else {
 				$("#" + arg + "_js").parent().hide();
 				$("#" + arg + "_cpp").parent().show();
