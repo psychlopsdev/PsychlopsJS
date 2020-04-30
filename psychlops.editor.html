@@ -64,6 +64,8 @@
 		var tabSettings = {};
 		var CTRL_S_LAST_PUSHED = Date.now();
 		var workingFile = "default";
+		var workingFileInfo = {};
+		infoFromFileName("default.cpp");
 		var args = null;
 		var WINDOW_MESSAGE_REQUESTER = "https://psychlops.osdn.jp";
 		var SELECTED_FILE = "";
@@ -253,6 +255,7 @@
 			}
 			result.filename = filename;
 			result.fileid = result.basename.replace(/[^0-9A-Za-z-_]/g, "_");
+			workingFileInfo[filename] = result;
 			return result;
 		}
 		function openNewTab() {
@@ -1216,7 +1219,7 @@
 												<li><a onclick="discardAutosave(workingFile);">discard autosave</a></li>
 											</ul>
 										</div>
-										<li class="btn btn-default btn-xs" onclick="showJSprogram('tab_'+workingFile);" data-toggle="button">javascript</li>
+										<li class="btn btn-default btn-xs" onclick="showJSprogram('tab_' + workingFileInfo[workingFile].fileid);" data-toggle="button">javascript</li>
 									</div>
 								</div>
 
