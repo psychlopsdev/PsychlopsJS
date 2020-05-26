@@ -352,7 +352,7 @@ Psychlops.Util.initialize = function (str) {
 	if (!(typeof Psychlops.AppInfo.localSettings.TrueFullScreen == "undefined")) {
 		Psychlops.Util.trueFullscreen = Psychlops.AppInfo.localSettings.TrueFullScreen == "true" ? true : false;
 	} else {
-		Psychlops.Util.trueFullscreen = true;
+		Psychlops.Util.trueFullscreen = false;
 	}
 	Psychlops.Util.initFullScreen();
 	Psychlops.Input._INITIALIZE_();
@@ -2797,6 +2797,8 @@ Psychlops.Polygon = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 };
 Psychlops.Polygon.prototype = {
 	_shallow_copy: function () { var a = new Psychlops.Polygon(); a.vertices = this.vertices; a.datum = this.datum; a.fill = this.fill; a.stroke = this.stroke; return a; }
+	, getCenter: function () { return this.datum.dup(); }
+
 	, empty: function () {
 		this.vertices = [];
 	}
@@ -3150,7 +3152,7 @@ Psychlops.Image.prototype = {
 			window.navigator.msSaveBlob(blob, filename);
 		} else {
 			let btn = document.createElement("button");
-			btn.href = canvas.toDataURL('image/png');
+			btn.href = cnvs2d.toDataURL('image/png');
 			btn.download = filename;
 			btn.click();
 		}
@@ -3344,7 +3346,9 @@ Psychlops.Letters = function (initarg1, initarg2, initarg3) {
 	}
 }
 Psychlops.Letters.prototype = {
-	getFont: function () { return this.font; }
+	getCenter: function () { return this.datum.dup(); }
+
+	, getFont: function () { return this.font; }
 	, setFont: function (init_font) {
 		this.font = init_font;
 		return this;
@@ -3360,7 +3364,7 @@ Psychlops.Letters.prototype = {
 		var col;
 		if (arguments.length == 1) { col = spec_color; } else { col = this.fill; }
 		var canvas = document.createElement('canvas');
-		var w = Math.floor(this.font.size * this.str.length), h = Math.floor(this.font.size * 1.5);
+		var w = Math.floor(this.font.size * this.str.length)+10, h = Math.floor(this.font.size * 1.5);
 		canvas.width = w; canvas.height = h;
 		var ctx = canvas.getContext('2d');
 		ctx.clearRect(0, 0, w, h);
@@ -3374,7 +3378,7 @@ Psychlops.Letters.prototype = {
 		font_text += " " + this.font.family[0];
 		ctx.font = font_text;
 		ctx.textAlign = 'left';
-		ctx.fillText(this.str, 0, h - h / 3);
+		ctx.fillText(this.str + " ", 0, h - h / 3);
 
 		var input = ctx.getImageData(0, 0, w, h);
 		var i, r, g, b, a, mx = 0;
@@ -3384,6 +3388,7 @@ Psychlops.Letters.prototype = {
 				if (0 < inputData[(y * w + x) * 4 + 3] && mx < x) mx = x;
 			}
 		}
+		if(mx<w-4) { mx += 4; } else { mx = w; }
 		this.storage = new Psychlops.Image(mx, h);
 		for (var y = 0; y < h; y += 1) {
 			for (var x = 0; x < mx; x += 1) {
