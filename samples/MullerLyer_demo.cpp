@@ -136,10 +136,10 @@ void psychlops_main() {
 		cnvs.clear(Color::white);
 
 		//Interactions
-		if (rightbutton.pushed() && main_lineW2 < main_lineW*1.505) { main_lineW2 += lineH * 5; }
+		if (rightbutton.pushed() && main_lineW2 < main_lineW*1.505) { main_lineW2 += lineH * 0.5; }
 		if (leftbutton.pushed() && main_lineW2 > main_lineW*0.495) { main_lineW2 -= lineH * 0.5; }
 		if (rightbutton2.pushed() && main_lineW2 < main_lineW*1.505) { main_lineW2 += lineH * 5; }
-		if (leftbutton2.pushed() && main_lineW2 > main_lineW*0.495) { main_lineW2 -= lineH * 0.5; }
+		if (leftbutton2.pushed() && main_lineW2 > main_lineW*0.495) { main_lineW2 -= lineH * 5; }
 		main_lineR.resize(main_lineW2, lineH);
 		main_lineR.centering().shift(main_lineW2*0.5, stimY);
 		//Interactions
