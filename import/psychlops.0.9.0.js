@@ -3151,7 +3151,7 @@ Psychlops.Image.prototype = {
 			var blob = cnvs2d.msToBlob();
 			window.navigator.msSaveBlob(blob, filename);
 		} else {
-			let btn = document.createElement("button");
+			let btn = document.createElement("a");
 			btn.href = cnvs2d.toDataURL('image/png');
 			btn.download = filename;
 			btn.click();
