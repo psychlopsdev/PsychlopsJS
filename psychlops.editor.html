@@ -223,7 +223,7 @@
 		}
 		var showJSprogramToggle = true;
 		function showJSprogram(arg) {
-			if (showJSprogramToggle) {
+			if (workingFileInfo[workingFile].ext == "cpp" && showJSprogramToggle) {
 				cppEditor.save();
 				var func = Psychlops.CodeConverter.compile($("#" + arg + "_cpp").val());
 				$("#" + arg + "_cpp").parent().hide();
@@ -322,8 +322,17 @@
 				indentUnit: 4,
 				tabSize: 4,
 			});
-			$("#" + js_tab_id).parent().hide();
-			$("#" + cpp_tab_id).parent().show();
+			
+			switch(tabset.ext) {
+				case "cpp":
+					$("#" + js_tab_id).parent().hide();
+					$("#" + cpp_tab_id).parent().show();
+					break;
+				case "js":
+					$("#" + js_tab_id).parent().show();
+					$("#" + cpp_tab_id).parent().hide();
+					break;
+			}
 
 			snapshot_button.html("Load (" + confirmSnapshotTimestamp(filename) + ")");
 			autosave_button.html("Load (" + confirmAutosaveTimestamp(filename) + ")");
@@ -347,6 +356,15 @@
 			cppEditor = tabSettings[filename].cppEditor;
 			jsEditor = tabSettings[filename].jsEditor;
 			workingFile = filename;
+
+			switch(workingFileInfo[workingFile].ext) {
+				case "cpp":
+					//showJSprogram(workingFile);
+					break;
+				case "js":
+					showJSprogram(workingFile);
+					break;
+			}
 		}
 
 		function loadHelpMarkdown(title, filename, activation) {

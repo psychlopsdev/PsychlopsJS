@@ -31,6 +31,7 @@
 
 	<script type="text/javascript">
 		var args = null;
+		var lang_mode = "cpp";
 		function run() {
 			$("#psychlops_powersymbol").hide();
 			Psychlops.Variables.debugMode = $('#debugmode_checkbox').prop('checked');
@@ -39,14 +40,22 @@
 			} else {
 				$('#psychlops_watchlist_area').hide();
 			}
-			var func = Psychlops.CodeConverter.compile($("#running_program").val());
+			var func;
+			switch(lang_mode) {
+				case "cpp":
+					func = Psychlops.CodeConverter.compile($("#running_program").val());
+					break;
+				case "js":
+					func = $("#running_program").val();
+					break;
+			}
 			if (args) {
 				Psychlops.Util.run(func, args);
 			} else {
 				Psychlops.Util.run(func);
 			}
 		}
-		function loadCpp(file, immidiate_run, retry) {
+		function loadFile(file, immidiate_run, retry) {
 			var filename = file;
 			var retry_last = 5;
 			if (typeof (retry) == Number) { retry_last = retry; }
@@ -70,7 +79,7 @@
 			}).fail(function (data) {
 				alert('再読み込みしてください ' + filename + '.' + retry);
 				Psychlops.Util.programFinishedCallback();
-				//if(retry_last>0) { loadCpp(file, immidiate_run, retry-1); }
+				//if(retry_last>0) { loadFile(file, immidiate_run, retry-1); }
 			});
 		}
 		$(function () {
@@ -128,7 +137,16 @@
 
 			if (hash != null) {
 				$("#psychlops_throbber").show();
-				loadCpp(hash, true);
+				let dotplace = hash.lastIndexOf('.');
+				let ext = hash.substring(dotplace+1, hash.length).toLowerCase();
+				lang_mode = ext;
+				switch(ext) {
+					case "cpp":
+						break;
+					case "js":
+						break;
+				}
+				loadFile(hash, true);
 			} else {
 				$("#file_not_specified").show();
 				$("#newcppbox").show();
@@ -144,7 +162,7 @@
 				if(typeof data == "object" && "url" in data && "participant" in data) {
 					Psychlops.AppInfo.participant_name = data.participant;
 					Psychlops.AppInfo.participant_attr = data.participant_attr;
-					loadCpp(data.url, true);
+					loadFile(data.url, true);
 				}
 			});
 
@@ -183,7 +201,7 @@
 			<span style="display:none;" id="newcppbox">
 				<label>C++ file: </label>
 				<input id="newcpp" type="text" size="30" value="cpp/ContrastSensitivity.cpp" />
-				<button onclick="loadCpp($('#newcpp').val());">load</button>
+				<button onclick="loadFile($('#newcpp').val());">load</button>
 			</span>
 			<label class="checkbox-inline"><input data-toggle="toggle" data-size="small" type="checkbox" onchange="$('#psychlops_console').fadeToggle('fast');" />Console</label>
 			<button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="modal" data-target="#modal_data">Results</button>
