@@ -418,7 +418,7 @@ Psychlops.Util.runProgram = function (js_source, watch_func) {
 	try {
 		eval(js_source);
 		Psychlops.Util.initialize();
-		if (Psychlops.Util.trueFullscreen && Psychlops.Util.requireFullscreen) { Psychlops.Util.toggleFullScreen(); }
+		if (Psychlops.Util.trueFullscreen && Psychlops.Util.requireFullscreen) { Psychlops.Util.enableFullScreen(); }
 	} catch (e) {
 		//Psychlops.Util.CompileError += e.message;
 		alert(e.constructor + "\r\n\r\n" + e.name + "\r\n\r\n" + e.message + "\r\n\r\n" + e.stack ? e.stack : "");
@@ -503,7 +503,7 @@ Psychlops.Util.runProgram2013 = function (js_source, watch_func) {
 	try {
 		Psychlops.Util.initialize();
 		eval(js_source);
-		if (Psychlops.Util.trueFullscreen && Psychlops.Util.requireFullscreen) { Psychlops.Util.toggleFullScreen(); }
+		if (Psychlops.Util.trueFullscreen && Psychlops.Util.requireFullscreen) { Psychlops.Util.enableFullScreen(); }
 	} catch (e) {
 		//Psychlops.Util.CompileError += e.message;
 		alert(e.constructor + "\r\n\r\n" + e.message + "\r\n\r\n" + e.stack ? e.stack : "");
@@ -600,7 +600,8 @@ Psychlops.Util.checkExit = function () {
 }
 
 Psychlops.Util.isTrueFullScreen = function () {
-	return !(document.fullscreenElement == null && document.mozFullScreenElement == null && document.webkitFullscreenElement == null && document.msFullscreenElement == null);
+	//return !(document.fullscreenElement == null && document.mozFullScreenElement == null && document.webkitFullscreenElement == null && document.msFullscreenElement == null);
+	return !(document.fullscreenElement == null);
 }
 Psychlops.Util.initFullScreen = function () {
 	document.addEventListener("webkitfullscreenchange", Psychlops.Util.handleFullScreen, false);
@@ -608,25 +609,36 @@ Psychlops.Util.initFullScreen = function () {
 	document.addEventListener("MSFullscreenChange", Psychlops.Util.handleFullScreen, false);
 	document.addEventListener("fullscreenchange", Psychlops.Util.handleFullScreen, false);
 };
+Psychlops.Util.checkFullScreen = function (s) {
+	return (((typeof document.fullscreenEnabled) != "undefined") && (document.fullscreenEnabled));
+}
 Psychlops.Util.toggleFullScreen = function (s) {
-	var str = arguments.length == 1 ? s : Psychlops.Util.window_canvas_container_element_id;
-	var elem = document.getElementById(str);
-	//$("#modal_stimuli").modal('hide');
-	if (!document.fullscreenElement &&    // alternative standard method
-		!document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {  // current working methods
-		if (document.documentElement.requestFullscreen) {
-			elem.requestFullscreen();
-		} else if (elem.msRequestFullscreen) {
-			elem.msRequestFullscreen();
-		} else if (elem.mozRequestFullScreen) {
-			elem.mozRequestFullScreen();
-		} else if (elem.webkitRequestFullscreen) {
-			elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-		}
+	if (Psychlops.Util.isTrueFullScreen()) {
+		Psychlops.Util.enableFullScreen();
 	} else {
 		Psychlops.Util.exitFullscreen();
 	}
 };
+Psychlops.Util.enableFullScreen = function (s) {
+	var str = arguments.length == 1 ? s : Psychlops.Util.window_canvas_container_element_id;
+	var elem = document.getElementById(str);
+	//$("#modal_stimuli").modal('hide');
+	if (document.fullscreenElement==null // alternative standard method
+		//&& !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement
+		) {  // current working methods
+		if(Psychlops.Util.checkFullScreen()) {
+			if (document.documentElement.requestFullscreen) {
+				elem.requestFullscreen();
+			} else if (elem.msRequestFullscreen) {
+				elem.msRequestFullscreen();
+			} else if (elem.mozRequestFullScreen) {
+				elem.mozRequestFullScreen();
+			} else if (elem.webkitRequestFullscreen) {
+				elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+			}
+		}
+	}
+}
 Psychlops.Util.exitFullscreen = function () {
 	if (document.exitFullscreen) {
 		document.exitFullscreen();
@@ -1379,7 +1391,7 @@ Psychlops.Canvas = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 					this.initialize(elem_id);
 				}
 				else if (a1 == Psychlops.Canvas.fullscreen) {
-					if (Psychlops.Util.trueFullscreen && !(Psychlops.Util.isiOS || Psychlops.Util.isAndroid)) {
+					if (Psychlops.Util.isTrueFullScreen() && !(Psychlops.Util.isiOS || Psychlops.Util.isAndroid)) {
 						this.width = Psychlops.Display.primary.width;
 						this.height = Psychlops.Display.primary.height;
 					} else {
