@@ -628,6 +628,9 @@ Psychlops.Util.enableFullScreen = function (s) {
 		) {  // current working methods
 		if(Psychlops.Util.checkFullScreen()) {
 			if (document.documentElement.requestFullscreen) {
+				//document.addEventListener("fullscreenchange", function () {
+				//	if (document.fullscreenEnabled!=null) {}
+				//});
 				elem.requestFullscreen();
 			} else if (elem.msRequestFullscreen) {
 				elem.msRequestFullscreen();
@@ -1391,7 +1394,8 @@ Psychlops.Canvas = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 					this.initialize(elem_id);
 				}
 				else if (a1 == Psychlops.Canvas.fullscreen) {
-					if (Psychlops.Util.isTrueFullScreen() && !(Psychlops.Util.isiOS || Psychlops.Util.isAndroid)) {
+					//if ((document.fullscreenElement!=null) && !(Psychlops.Util.isiOS || Psychlops.Util.isAndroid)) {
+					if ((Psychlops.Util.trueFullscreen) && !(Psychlops.Util.isiOS || Psychlops.Util.isAndroid)) {
 						this.width = Psychlops.Display.primary.width;
 						this.height = Psychlops.Display.primary.height;
 					} else {
@@ -1496,6 +1500,8 @@ Psychlops.Canvas = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 		if (this._fullscreen) {
 			//s = '<canvas id="' + element_id + '" width="' + this.width + '" height="' + this.height + '" tabindex="0" style="z-index:9999;position:fixed;top:0;left:0;width:' + style_width + ';height:' + style_height + ';">We are sorry, but your browser does not seem to support WebGL.</canvas>';
 			s = '<canvas id="' + element_id + '" width="' + this.width + '" height="' + this.height + '" tabindex="0" style="touch-action:none;z-index:9999;position:fixed;top:0;left:0;' + style_zoom + ';">We are sorry, but your browser does not seem to support WebGL.</canvas>';
+			let body = document.querySelector("body");
+			body.style.overflow = "hidden";
 			//window.addEventListener('resize', this._resizeOnPseudoFullscreen);
 		} else {
 			//s = '<canvas id="' + element_id + '" width="' + this.width + '" height="' + this.height + '" tabindex="0" style="width:' + style_width + ';height:' + style_height + ';">We are sorry, but your browser does not seem to support WebGL.</canvas>';
