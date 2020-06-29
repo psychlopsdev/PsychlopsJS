@@ -1529,6 +1529,7 @@ Psychlops.Canvas = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 			try { this.gl = element.getContext('webgl', { antialias: this.antialiased }) || element.getContext("experimental-webgl", { antialias: this.antialiased }); }
 			catch (e) { }
 			if (!this.gl) { alert("Unable to initialize WebGL. Your browser may not support it."); }
+			console.log("MAX_COMBINED_TEXTURE_IMAGE_UNITS: " + this.gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS);
 
 			Psychlops.Keyboard.linkEventCallback(element);
 			Psychlops.Mouse.linkEventCallback(element);
