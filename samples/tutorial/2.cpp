@@ -7,6 +7,7 @@ void psychlops_main() {
 	Psychlops::Rectangle figure; 
 
 	while(!Keyboard::esc.pushed()) {
+		window.clear(); 
 		figure.set( 100, 100 ); 
 		figure.centering();   
 		figure.shift( 10, 10 ); 

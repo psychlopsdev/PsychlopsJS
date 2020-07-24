@@ -1987,6 +1987,12 @@ void main(void) { \
 		var th = Math.atan2(m2, 1);
 		var xs = arg1.stroke.width * cos(th);
 		var ys = arg1.stroke.width * sin(th);
+		console.log(xs);
+		console.log(ys);
+		console.log("SX" + arg1.start.x);
+		console.log("SY" + arg1.start.y);
+		console.log("EX" + arg1.end.x);
+		console.log("EY" + arg1.end.y);
 
 		var poly = new Psychlops.Polygon();
 		//poly.append(arg1.start.x, arg1.start.y);
@@ -2476,6 +2482,8 @@ Psychlops.Line = function (iniarg1, iniarg2, iniarg3, iniarg4) {
 	this.start = new Psychlops.Point();
 	this.end = new Psychlops.Point();
 	this.stroke = new Psychlops.Stroke();
+	
+	this.set(iniarg1, iniarg2, iniarg3, iniarg4);
 }
 Psychlops.Line.prototype = {
 	getStart: function () {
@@ -2530,12 +2538,14 @@ Psychlops.Line.prototype = {
 	, draw: function (a1) {
 		Psychlops.Line.__BUF__.set(this.start.x, this.start.y, this.end.x, this.end.y);
 		if (arguments.length == 0) {
+			console.log(this.stroke.width);
 			Psychlops.the_canvas.line(this);
 		} else {
 			if (typeof a1.pattern !== "undefined") {
 				Psychlops.Line.__BUF__.stroke = a1.dup();
 			} else {
-				Psychlops.Line.__BUF__.stroke = new Psychlops.Stroke(a1);
+				Psychlops.Line.__BUF__.stroke = this.stroke.dup();
+				Psychlops.Line.__BUF__.stroke.color = a1.dup();
 			}
 			Psychlops.the_canvas.line(Psychlops.Line.__BUF__);
 		}

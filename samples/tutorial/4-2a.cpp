@@ -21,9 +21,9 @@ void psychlops_main() {
         img[k].set(imageHsize, imageVsize); 
         for(int i=0; i <imageHsize; i++){
             for(int j=0; j < imageVsize; j++){
-                R=Psychlops::random(); 
-                G=Psychlops::random(); 
-                B=Psychlops::random(); 
+                R = Psychlops::random(); 
+                G = Psychlops::random(); 
+                B = Psychlops::random(); 
                 img[k].pix(i,j, dotcol.set(R,G,B));
             }
         }

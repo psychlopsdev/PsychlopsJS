@@ -33,9 +33,9 @@ void psychlops_main() {
             env=exp(-(_i*_i+_j*_j)/(2.0*(sd*sd)) ); 
 
             for (int k=0; k<imagenumber; k++){
-               R=Psychlops::random(); 
-          	   G=Psychlops::random(); 
-          	   B=Psychlops::random(); 
+               R = Psychlops::random(); 
+          	   G = Psychlops::random(); 
+          	   B = Psychlops::random(); 
                img[k].pix(i,j, dotcol.set(env*R,env*G,env*B));
 
             }

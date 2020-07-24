@@ -15,9 +15,9 @@ void psychlops_main() {
 
 	for(int i=0; i < imageHsize; i++){
 		for(int j=0; j < imageVsize; j++){
-			R=Psychlops::random() * 0.5; 
-			G=Psychlops::random() * 0.5; 
-			B=Psychlops::random() * 0.5; 
+			R = Psychlops::random() * 0.5; 
+			G = Psychlops::random() * 0.5; 
+			B = Psychlops::random() * 0.5; 
 			img.pix(i,j, dotcol.set(R,G,B));
 			centerrect.centering();
 		}

@@ -24,9 +24,9 @@ void psychlops_main() {
             sd = imageVsize/6; 
             env=exp(-(_i*_i+_j*_j)/(2.0*(sd*sd)) ); 
 
-            R=Psychlops::random(); 
-            G=Psychlops::random(); 
-            B=Psychlops::random(); 
+            R = Psychlops::random(); 
+            G = Psychlops::random(); 
+            B = Psychlops::random(); 
 
             img.pix(i,j, dotcol.set(env*R, env*G, env*B));
         }
