@@ -35,3 +35,4 @@ User's Manual
 ======================
 
 - [Install Guide](https://psychlopsdev.github.io/PsychlopsJS/doc/InstallGuide)
+
